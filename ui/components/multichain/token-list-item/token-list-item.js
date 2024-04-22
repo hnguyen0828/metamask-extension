@@ -41,6 +41,7 @@ import {
   getNativeCurrencyImage,
   getPreferences,
   getTestNetworkBackgroundColor,
+  getTokenPercentChange1d,
 } from '../../../selectors';
 import Tooltip from '../../ui/tooltip';
 import { useI18nContext } from '../../../hooks/useI18nContext';
@@ -57,6 +58,7 @@ import { ENVIRONMENT_TYPE_FULLSCREEN } from '../../../../shared/constants/app';
 import { getEnvironmentType } from '../../../../app/scripts/lib/util';
 import { getProviderConfig } from '../../../ducks/metamask/metamask';
 import { getPortfolioUrl } from '../../../helpers/utils/portfolio';
+import { PercentageChange } from './price/percentage-change';
 
 export const TokenListItem = ({
   className,
@@ -70,12 +72,14 @@ export const TokenListItem = ({
   isOriginalTokenSymbol,
   isNativeCurrency = false,
   isStakeable = false,
+  address = null,
 }) => {
   const t = useI18nContext();
   const primaryTokenImage = useSelector(getNativeCurrencyImage);
   const trackEvent = useContext(MetaMetricsContext);
   const metaMetricsId = useSelector(getMetaMetricsId);
   const chainId = useSelector(getCurrentChainId);
+  const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
   // Scam warning
   const showScamWarning = isNativeCurrency && !isOriginalTokenSymbol;
@@ -88,6 +92,13 @@ export const TokenListItem = ({
   const isFullScreen = environmentType === ENVIRONMENT_TYPE_FULLSCREEN;
   const history = useHistory();
 
+  const tokenPercentChange1d = useSelector(getTokenPercentChange1d);
+  const contractPercentChange1d = tokenPercentChange1d?.[chainId] ?? '';
+
+  console.log('HERE +++++++++++++++', contractPercentChange1d[ZERO_ADDRESS]);
+  const tokenAddress = address ? address.toLowerCase() : null;
+
+  const tokenPercentageChange = contractPercentChange1d[tokenAddress];
   const tokenTitle =
     title === CURRENCY_SYMBOLS.ETH && isOriginalTokenSymbol
       ? t('networkNameEthereum')
@@ -227,10 +238,10 @@ export const TokenListItem = ({
                   >
                     {isStakeable ? (
                       <>
-                        {tokenSymbol} {stakeableTitle}
+                        {tokenTitle} {stakeableTitle}
                       </>
                     ) : (
-                      tokenSymbol
+                      tokenTitle
                     )}
                   </Text>
                 </Tooltip>
@@ -243,21 +254,21 @@ export const TokenListItem = ({
                 >
                   {isStakeable ? (
                     <Box display={Display.InlineBlock}>
-                      {tokenSymbol} {stakeableTitle}
+                      {tokenTitle} {stakeableTitle}
                     </Box>
                   ) : (
-                    tokenSymbol
+                    tokenTitle
                   )}
                 </Text>
               )}
-              <Text
-                variant={TextVariant.bodyMd}
-                color={TextColor.textAlternative}
-                data-testid="multichain-token-list-item-token-name" //
-                ellipsis
-              >
-                {tokenTitle}
-              </Text>
+
+              <PercentageChange
+                value={
+                  isNativeCurrency
+                    ? contractPercentChange1d[ZERO_ADDRESS]
+                    : tokenPercentageChange
+                }
+              />
             </Box>
 
             {showScamWarning ? (
@@ -417,4 +428,8 @@ TokenListItem.propTypes = {
    * isStakeable represents if this item is stakeable
    */
   isStakeable: PropTypes.bool,
+  /**
+   * address represents the token address
+   */
+  address: PropTypes.string,
 };
