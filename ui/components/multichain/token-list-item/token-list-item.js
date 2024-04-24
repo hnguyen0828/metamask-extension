@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import classnames from 'classnames';
+import { zeroAddress } from 'ethereumjs-util';
 import {
   AlignItems,
   BackgroundColor,
@@ -79,7 +80,6 @@ export const TokenListItem = ({
   const trackEvent = useContext(MetaMetricsContext);
   const metaMetricsId = useSelector(getMetaMetricsId);
   const chainId = useSelector(getCurrentChainId);
-  const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
   // Scam warning
   const showScamWarning = isNativeCurrency && !isOriginalTokenSymbol;
@@ -95,7 +95,6 @@ export const TokenListItem = ({
   const tokenPercentChange1d = useSelector(getTokenPercentChange1d);
   const contractPercentChange1d = tokenPercentChange1d?.[chainId] ?? '';
 
-  console.log('HERE +++++++++++++++', contractPercentChange1d[ZERO_ADDRESS]);
   const tokenAddress = address ? address.toLowerCase() : null;
 
   const tokenPercentageChange = contractPercentChange1d[tokenAddress];
@@ -265,7 +264,7 @@ export const TokenListItem = ({
               <PercentageChange
                 value={
                   isNativeCurrency
-                    ? contractPercentChange1d[ZERO_ADDRESS]
+                    ? contractPercentChange1d[zeroAddress()]
                     : tokenPercentageChange
                 }
               />

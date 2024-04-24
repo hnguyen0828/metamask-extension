@@ -26,6 +26,7 @@ import {
 } from '../../../../ducks/metamask/metamask';
 import { getTopAssets } from '../../../../ducks/swaps/swaps';
 import { getRenderableTokenData } from '../../../../hooks/useTokensToSearch';
+import { getIntlLocale } from '../../../../ducks/locale/locale';
 import { AssetPickerModal } from './asset-picker-modal';
 import { Asset } from './types';
 import AssetList from './AssetList';
@@ -53,6 +54,12 @@ jest.mock('../../../../hooks/useTokensToSearch', () => ({
   getRenderableTokenData: jest.fn(),
 }));
 
+jest.mock('../../../../ducks/locale/locale', () => ({
+  getIntlLocale: jest.fn(),
+}));
+
+const mockGetIntlLocale = getIntlLocale as unknown as jest.Mock;
+
 describe('AssetPickerModal', () => {
   const useSelectorMock = useSelector as jest.Mock;
   const useI18nContextMock = useI18nContext as jest.Mock;
@@ -60,6 +67,8 @@ describe('AssetPickerModal', () => {
   const useTokenTrackerMock = useTokenTracker as jest.Mock;
   const mockStore = configureStore();
   const store = mockStore(mockState);
+
+  mockGetIntlLocale.mockReturnValue('en-US');
 
   const onAssetChangeMock = jest.fn();
   const onCloseMock = jest.fn();
