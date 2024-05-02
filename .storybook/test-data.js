@@ -470,11 +470,14 @@ const state = {
     contractExchangeRates: {
       '0xaD6D458402F60fD3Bd25163575031ACDce07538D': 0,
     },
-    contractPercentChange1d: {
-      '0xaD6D458402F60fD3Bd25163575031ACDce07538D': 0.004,
-    },
-    priceChange1d: {
-      '0xaD6D458402F60fD3Bd25163575031ACDce07538D': 0.00004,
+    marketData: {
+      '0x1': {
+        '0xaD6D458402F60fD3Bd25163575031ACDce07538D': {
+          value: 0,
+          contractPercentChange1d: 0.004,
+          priceChange1d: 0.00004,
+        },
+      },
     },
     tokens: [
       {

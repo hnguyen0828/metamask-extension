@@ -267,7 +267,7 @@
   "TokenRatesController": {
     "contractExchangeRates": "object",
     "contractExchangeRatesByChainId": "object",
-    "oneDayPriceChange": "object"
+    "marketData": "object"
   },
   "TokensController": {
     "tokens": "object",

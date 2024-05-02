@@ -1,0 +1,338 @@
+diff --git a/dist/TokenRatesController.d.ts b/dist/TokenRatesController.d.ts
+index 55ace8fe62eb802205a0ea171dcd92005209eedb..059c824aa9ac8d31bf921ad8634d5ac23b3fe537 100644
+--- a/dist/TokenRatesController.d.ts
++++ b/dist/TokenRatesController.d.ts
+@@ -60,8 +60,32 @@ export interface ContractExchangeRates {
+ }
+ export type ContractInformations = {
+   contractExchangeRates: ContractExchangeRates;
+-  contractPercentChange1d: ContractExchangeRates;
+-  priceChange1d: ContractExchangeRates;
++  marketData: Record<
++    Hex,
++    {
++      tokenAddress: `0x${string}`;
++      value: number;
++      currency: string;
++      allTimeHigh: number;
++      allTimeLow: number;
++      circulatingSupply: number;
++      dilutedMarketCap: number;
++      high1d: number;
++      low1d: number;
++      marketCap: number;
++      marketCapPercentChange1d: number;
++      price: number;
++      priceChange1d: number;
++      pricePercentChange1d: number;
++      pricePercentChange1h: number;
++      pricePercentChange1y: number;
++      pricePercentChange7d: number;
++      pricePercentChange14d: number;
++      pricePercentChange30d: number;
++      pricePercentChange200d: number;
++      totalVolume: number;
++    }
++  >;
+ };
+ /**
+  * @type TokenRatesState
+@@ -76,12 +100,34 @@ export interface TokenRatesState extends BaseState {
+     Hex,
+     Record<string, ContractExchangeRates>
+   >;
+-  oneDayPriceChange: Record<
++  marketData: Record<
+     Hex,
+-    {
+-      priceChange1d: ContractExchangeRates;
+-      contractPercentChange1d: ContractExchangeRates;
+-    }
++    Record<
++      Hex,
++      {
++        tokenAddress: `0x${string}`;
++        value: number;
++        currency: string;
++        allTimeHigh: number;
++        allTimeLow: number;
++        circulatingSupply: number;
++        dilutedMarketCap: number;
++        high1d: number;
++        low1d: number;
++        marketCap: number;
++        marketCapPercentChange1d: number;
++        price: number;
++        priceChange1d: number;
++        pricePercentChange1d: number;
++        pricePercentChange1h: number;
++        pricePercentChange1y: number;
++        pricePercentChange7d: number;
++        pricePercentChange14d: number;
++        pricePercentChange30d: number;
++        pricePercentChange200d: number;
++        totalVolume: number;
++      }
++    >
+   >;
+ }
+ /**
+diff --git a/dist/TokenRatesController.js b/dist/TokenRatesController.js
+index 4dbd4e07d1c893b4da8ba5ff1cc4fea71565a11f..f2de48035e18e644f8b09436eb22695b24b4ed69 100644
+--- a/dist/TokenRatesController.js
++++ b/dist/TokenRatesController.js
+@@ -156,7 +156,7 @@ class TokenRatesController extends polling_controller_1.StaticIntervalPollingCon
+     this.defaultState = {
+       contractExchangeRates: {},
+       contractExchangeRatesByChainId: {},
+-      oneDayPriceChange: {},
++      marketData: {},
+     };
+     this.initialize();
+     this.setIntervalLength(interval);
+@@ -170,6 +170,7 @@ class TokenRatesController extends polling_controller_1.StaticIntervalPollingCon
+     if (config?.disabled) {
+       this.configure({ disabled: true }, false, false);
+     }
++    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+     onPreferencesStateChange(async ({ selectedAddress }) => {
+       if (this.config.selectedAddress !== selectedAddress) {
+         this.configure({ selectedAddress });
+@@ -181,6 +182,7 @@ class TokenRatesController extends polling_controller_1.StaticIntervalPollingCon
+         }
+       }
+     });
++    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+     onTokensStateChange(async ({ allTokens, allDetectedTokens }) => {
+       const previousTokenAddresses = __classPrivateFieldGet(
+         this,
+@@ -203,13 +205,14 @@ class TokenRatesController extends polling_controller_1.StaticIntervalPollingCon
+         await this.updateExchangeRates();
+       }
+     });
++    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+     onNetworkStateChange(async ({ providerConfig }) => {
+       const { chainId, ticker } = providerConfig;
+       if (
+         this.config.chainId !== chainId ||
+         this.config.nativeCurrency !== ticker
+       ) {
+-        this.update({ contractExchangeRates: {} });
++        this.update({ marketData: {} });
+         this.configure({ chainId, nativeCurrency: ticker });
+         if (
+           __classPrivateFieldGet(this, _TokenRatesController_pollState, "f") ===
+@@ -331,14 +334,9 @@ class TokenRatesController extends polling_controller_1.StaticIntervalPollingCon
+       });
+       const newContractExchangeRates =
+         contractInformations.contractExchangeRates;
+-      const newOneDayPriceChange = {
++      const marketData = {
+         [chainId]: {
+-          contractPercentChange1d: {
+-            ...(contractInformations?.contractPercentChange1d ?? {}),
+-          },
+-          priceChange1d: {
+-            ...(contractInformations?.priceChange1d ?? {}),
+-          },
++          ...(contractInformations.marketData ?? {}),
+         },
+       };
+       const existingContractExchangeRates = this.state.contractExchangeRates;
+@@ -362,7 +360,7 @@ class TokenRatesController extends polling_controller_1.StaticIntervalPollingCon
+       this.update({
+         contractExchangeRates: updatedContractExchangeRates,
+         contractExchangeRatesByChainId: updatedContractExchangeRatesForChainId,
+-        oneDayPriceChange: newOneDayPriceChange,
++        marketData,
+       });
+       updateSucceeded();
+     } catch (error) {
+@@ -470,25 +468,19 @@ exports.TokenRatesController = TokenRatesController;
+       ) {
+         return tokenAddresses.reduce(
+           (obj, tokenAddress) => {
+-            return {
+-              contractExchangeRates: {
+-                ...obj.contractExchangeRates,
+-                [tokenAddress]: undefined,
+-              },
+-              contractPercentChange1d: {
+-                ...obj.contractPercentChange1d,
+-                [tokenAddress]: undefined,
+-              },
+-              priceChange1d: {
+-                ...obj.priceChange1d,
+-                [tokenAddress]: undefined,
+-              },
++            obj.marketData = {
++              ...obj.marketData,
++              [tokenAddress]: undefined,
+             };
++            obj.contractExchangeRates = {
++              ...obj.contractExchangeRates,
++              [tokenAddress]: undefined,
++            };
++            return obj;
+           },
+           {
+             contractExchangeRates: {},
+-            contractPercentChange1d: {},
+-            priceChange1d: {},
++            marketData: {},
+           }
+         );
+       }
+@@ -577,12 +569,7 @@ exports.TokenRatesController = TokenRatesController;
+         contractNativeInformations = {
+           [ZERO_ADDRESS]: {
+             currency: nativeCurrency,
+-            priceChange1d:
+-              contractNativeInformationsNative[ZERO_ADDRESS]?.priceChange1d,
+-            pricePercentChange1d:
+-              contractNativeInformationsNative[ZERO_ADDRESS]?.priceChange1d,
+-            tokenAddress: ZERO_ADDRESS,
+-            value: contractNativeInformationsNative[ZERO_ADDRESS]?.value,
++            ...contractNativeInformationsNative[ZERO_ADDRESS],
+           },
+         };
+       }
+@@ -592,20 +579,15 @@ exports.TokenRatesController = TokenRatesController;
+             ...obj.contractExchangeRates,
+             [tokenAddress.toLowerCase()]: tokenPrice?.value,
+           };
+-          obj.contractPercentChange1d = {
+-            ...obj.contractPercentChange1d,
+-            [tokenAddress.toLowerCase()]: tokenPrice?.pricePercentChange1d,
+-          };
+-          obj.priceChange1d = {
+-            ...obj.priceChange1d,
+-            [tokenAddress.toLowerCase()]: tokenPrice?.priceChange1d,
++          obj.marketData = {
++            ...obj.marketData,
++            [tokenAddress.toLowerCase()]: { ...tokenPrice },
+           };
+           return obj;
+         },
+         {
+           contractExchangeRates: {},
+-          contractPercentChange1d: {},
+-          priceChange1d: {},
++          marketData: {},
+         }
+       );
+     }),
+@@ -648,23 +630,37 @@ exports.TokenRatesController = TokenRatesController;
+       if (fallbackCurrencyToNativeCurrencyConversionRate === null) {
+         return {
+           contractExchangeRates: {},
+-          contractPercentChange1d: {},
+-          priceChange1d: {},
++          marketData: {},
+         };
+       }
+       const updatedContractExchangeRates = Object.entries(
+-        contractExchangeInformations.contractExchangeRates
+-      ).reduce((obj, [tokenAddress, tokenValue]) => {
+-        return {
+-          ...obj,
+-          [tokenAddress]: tokenValue
+-            ? tokenValue * fallbackCurrencyToNativeCurrencyConversionRate
+-            : undefined,
+-        };
+-      }, {});
+-      // Update the original object
+-      contractExchangeInformations.contractExchangeRates =
+-        updatedContractExchangeRates;
+-      return contractExchangeInformations;
++        contractExchangeInformations.marketData
++      ).reduce(
++        (obj, [tokenAddress, tokenValue]) => {
++          obj.contractExchangeRates = {
++            ...obj.contractExchangeRates,
++            [tokenAddress.toLowerCase()]: tokenValue.value
++              ? tokenValue.value *
++                fallbackCurrencyToNativeCurrencyConversionRate
++              : undefined,
++          };
++          obj.marketData = {
++            ...obj.marketData,
++            [tokenAddress]: {
++              ...tokenValue,
++              value: tokenValue.value
++                ? tokenValue.value *
++                  fallbackCurrencyToNativeCurrencyConversionRate
++                : undefined,
++            },
++          };
++          return obj;
++        },
++        {
++          contractExchangeRates: {},
++          marketData: {},
++        }
++      );
++      return updatedContractExchangeRates;
+     });
+ exports.default = TokenRatesController;
+diff --git a/dist/token-prices-service/codefi-v2.js b/dist/token-prices-service/codefi-v2.js
+index c7603691607f4894ce6bfec7080ca353bee47b39..5c411e08c7e0659b7a7279c1f17a92b7ccbb1f1b 100644
+--- a/dist/token-prices-service/codefi-v2.js
++++ b/dist/token-prices-service/codefi-v2.js
+@@ -364,19 +364,49 @@ class CodefiTokenPricesServiceV2 {
+       // The Price API lowercases both currency and token addresses, so we have
+       // to keep track of them and make sure we return the original versions.
+       const lowercasedTokenAddress = tokenAddress.toLowerCase();
+-      const price =
+-        pricesByCurrencyByTokenAddress[lowercasedTokenAddress]?.price;
+-      const pricePercentChange1d =
+-        pricesByCurrencyByTokenAddress[lowercasedTokenAddress]
+-          ?.pricePercentChange1d;
+-      const priceChange1d =
+-        pricesByCurrencyByTokenAddress[lowercasedTokenAddress]?.priceChange1d;
++      const tokenData =
++        pricesByCurrencyByTokenAddress[lowercasedTokenAddress] || {};
++      const {
++        price,
++        pricePercentChange1d,
++        priceChange1d,
++        allTimeHigh,
++        allTimeLow,
++        circulatingSupply,
++        dilutedMarketCap,
++        high1d,
++        marketCap,
++        totalVolume,
++        low1d,
++        marketCapPercentChange1d,
++        pricePercentChange1h,
++        pricePercentChange7d,
++        pricePercentChange14d,
++        pricePercentChange30d,
++        pricePercentChange200d,
++        pricePercentChange1y,
++      } = tokenData;
+       const tokenPrice = {
+         tokenAddress,
+         value: price,
+         currency,
+         pricePercentChange1d,
+         priceChange1d,
++        allTimeHigh,
++        allTimeLow,
++        circulatingSupply,
++        dilutedMarketCap,
++        high1d,
++        marketCap,
++        totalVolume,
++        low1d,
++        marketCapPercentChange1d,
++        pricePercentChange1h,
++        pricePercentChange7d,
++        pricePercentChange14d,
++        pricePercentChange30d,
++        pricePercentChange200d,
++        pricePercentChange1y,
+       };
+       return {
+         ...obj,

@@ -38,6 +38,7 @@ import {
   getUseExternalServices,
   getTokenPercentChange1d,
   getTokenPriceChange1d,
+  getTokensMarketData,
   ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
   getSwapsDefaultToken,
   getCurrentKeyring,
@@ -101,8 +102,7 @@ const EthOverview = ({ className, showAddress }) => {
     rpcUrl,
   );
 
-  const tokenPercentChange1d = useSelector(getTokenPercentChange1d);
-  const tokenPriceChange1d = useSelector(getTokenPriceChange1d);
+  const tokensMarketData = useSelector(getTokensMarketData);
 
   const account = useSelector(getSelectedInternalAccount);
   const isExternalServicesEnabled = useSelector(getUseExternalServices);
@@ -256,8 +256,8 @@ const EthOverview = ({ className, showAddress }) => {
               />
             )}
             <PercentageChange
-              value={tokenPercentChange1d?.[zeroAddress()]}
-              valueChange={tokenPriceChange1d?.[zeroAddress()]}
+              value={tokensMarketData?.[zeroAddress()]?.pricePercentChange1d}
+              valueChange={tokensMarketData?.[zeroAddress()]?.priceChange1d}
               includeNumber
             />
           </div>

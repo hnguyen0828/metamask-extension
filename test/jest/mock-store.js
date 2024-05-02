@@ -232,14 +232,18 @@ export const createSwapsMockStore = () => {
         '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': 2,
         '0x1111111111111111111111111111111111111111': 0.1,
       },
-      oneDayPriceChange: {
-        contractPercentChange1d: {
-          '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': 0.004,
-          '0x1111111111111111111111111111111111111111': 0.01,
-        },
-        priceChange1d: {
-          '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': 0.00004,
-          '0x1111111111111111111111111111111111111111': 0.001,
+      marketData: {
+        '0x1': {
+          '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48': {
+            value: 2,
+            contractPercentChange1d: 0.004,
+            priceChange1d: 0.00004,
+          },
+          '0x1111111111111111111111111111111111111111': {
+            value: 0.1,
+            contractPercentChange1d: 0.01,
+            priceChange1d: 0.001,
+          },
         },
       },
       identities: {

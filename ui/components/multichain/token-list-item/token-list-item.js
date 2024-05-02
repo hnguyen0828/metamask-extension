@@ -42,7 +42,7 @@ import {
   getNativeCurrencyImage,
   getPreferences,
   getTestNetworkBackgroundColor,
-  getTokenPercentChange1d,
+  getTokensMarketData,
 } from '../../../selectors';
 import Tooltip from '../../ui/tooltip';
 import { useI18nContext } from '../../../hooks/useI18nContext';
@@ -92,11 +92,12 @@ export const TokenListItem = ({
   const isFullScreen = environmentType === ENVIRONMENT_TYPE_FULLSCREEN;
   const history = useHistory();
 
-  const tokenPercentChange1d = useSelector(getTokenPercentChange1d);
+  const tokensMarketData = useSelector(getTokensMarketData);
 
   const tokenAddress = address ? address.toLowerCase() : null;
+  const tokenPercentageChange =
+    tokensMarketData?.[tokenAddress]?.pricePercentChange1d;
 
-  const tokenPercentageChange = tokenPercentChange1d?.[tokenAddress];
   const tokenTitle =
     title === CURRENCY_SYMBOLS.ETH && isOriginalTokenSymbol
       ? t('networkNameEthereum')
@@ -263,7 +264,7 @@ export const TokenListItem = ({
               <PercentageChange
                 value={
                   isNativeCurrency
-                    ? tokenPercentChange1d?.[zeroAddress()]
+                    ? tokensMarketData?.[zeroAddress()]?.pricePercentChange1d
                     : tokenPercentageChange
                 }
               />
