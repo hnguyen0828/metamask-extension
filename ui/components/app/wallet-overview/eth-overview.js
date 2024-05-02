@@ -36,8 +36,6 @@ import {
   getSelectedInternalAccount,
   getSelectedAccountCachedBalance,
   getUseExternalServices,
-  getTokenPercentChange1d,
-  getTokenPriceChange1d,
   getTokensMarketData,
   ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
   getSwapsDefaultToken,

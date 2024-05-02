@@ -69,32 +69,30 @@ export const PercentageChange = ({
   const locale = useSelector(getIntlLocale);
 
   let color = TextColor.textDefault;
+  const isValidAmount = (amount: number | null | undefined): boolean =>
+    amount !== null && amount !== undefined && !Number.isNaN(amount);
 
-  if (value !== null && value !== undefined && !Number.isNaN(value)) {
-    if (value >= 0) {
+  if (isValidAmount(value)) {
+    if ((value as number) >= 0) {
       color = TextColor.successDefault;
     } else {
       color = TextColor.errorDefault;
     }
   }
 
-  const formattedValue =
-    value !== null && value !== undefined && !Number.isNaN(value)
-      ? `${value >= 0 ? '+' : ''}${value.toFixed(2)}%`
-      : '';
+  const formattedValue = isValidAmount(value)
+    ? `${(value as number) >= 0 ? '+' : ''}${(value as number).toFixed(2)}%`
+    : '';
 
-  const formattedValuePrice =
-    valueChange !== null &&
-    valueChange !== undefined &&
-    !Number.isNaN(valueChange)
-      ? `${valueChange >= 0 ? '+' : ''}(${Intl.NumberFormat(locale, {
-          notation: 'compact',
-          compactDisplay: 'short',
-          style: 'currency',
-          currency: fiatCurrency,
-          maximumFractionDigits: 2,
-        }).format(valueChange)}) `
-      : '';
+  const formattedValuePrice = isValidAmount(valueChange)
+    ? `${(valueChange as number) >= 0 ? '+' : ''}(${Intl.NumberFormat(locale, {
+        notation: 'compact',
+        compactDisplay: 'short',
+        style: 'currency',
+        currency: fiatCurrency,
+        maximumFractionDigits: 2,
+      }).format(valueChange as number)}) `
+    : '';
 
   return includeNumber
     ? renderPercentageWithNumber(formattedValue, formattedValuePrice, color)
