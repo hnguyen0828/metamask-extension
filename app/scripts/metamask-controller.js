@@ -347,6 +347,8 @@ export default class MetamaskController extends EventEmitter {
 
     const { isFirstMetaMaskControllerSetup } = opts;
 
+    this.burnedTabIds = {};
+
     this.defaultMaxListeners = 20;
 
     this.sendUpdate = debounce(
@@ -4768,6 +4770,10 @@ export default class MetamaskController extends EventEmitter {
    * @property {string} snapId - The ID of the snap.
    */
 
+  updateBurnedTabIds(tabId) {
+    this.burnedTabIds[tabId] = true;
+  }
+
   /**
    * Used to create a multiplexed stream for connecting to an untrusted context
    * like a Dapp or other extension.
@@ -4795,7 +4801,7 @@ export default class MetamaskController extends EventEmitter {
       this.phishingController.maybeUpdateState();
       // Check if new connection is blocked if phishing detection is on
       const phishingTestResponse = this.phishingController.test(hostname);
-      if (phishingTestResponse?.result) {
+      if (phishingTestResponse?.result || this.burnedTabIds[sender.tab?.id]) {
         this.sendPhishingWarning(connectionStream, hostname);
         this.metaMetricsController.trackEvent({
           event: MetaMetricsEventName.PhishingPageDisplayed,
