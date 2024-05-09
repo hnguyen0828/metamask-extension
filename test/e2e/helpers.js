@@ -724,6 +724,12 @@ const defaultGanacheOptions = {
   accounts: [{ secretKey: PRIVATE_KEY, balance: convertETHToHexGwei(25) }],
 };
 
+const defaultGanacheOptionsForType2Transactions = {
+  ...defaultGanacheOptions,
+  // EVM version that supports type 2 transactions (EIP1559)
+  hardfork: 'london',
+};
+
 const multipleGanacheOptions = {
   accounts: [
     {
@@ -1173,5 +1179,9 @@ module.exports = {
   openActionMenuAndStartSendFlow,
   getCleanAppState,
   editGasFeeForm,
+<<<<<<< HEAD
   clickNestedButton,
+=======
+  defaultGanacheOptionsForType2Transactions,
+>>>>>>> 162b2748da (wip)
 };
