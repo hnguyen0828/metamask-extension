@@ -122,6 +122,7 @@
   },
   "resolutions": {
     "simple-update-notifier@^1.0.0": "^2.0.0",
+    "@metamask/assets-controllers@^29.0.0": "file:../core/packages/assets-controllers",
     "@babel/core": "patch:@babel/core@npm%3A7.23.2#~/.yarn/patches/@babel-core-npm-7.23.2-b93f586907.patch",
     "@types/react": "^16.9.53",
     "analytics-node/axios": "^0.21.2",

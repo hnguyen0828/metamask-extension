@@ -93,6 +93,9 @@ const baseStore = {
   },
   metamask: {
     permissionHistory: {},
+    marketData: {
+      '0x5': {},
+    },
     transactions: [
       {
         id: 1,

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
+import { BigNumber } from 'bignumber.js';
+import { isHexString, zeroAddress } from 'ethereumjs-util';
 import { Text, Box } from '../../../component-library';
 import {
   Display,
@@ -7,8 +9,18 @@ import {
   TextColor,
   TextVariant,
 } from '../../../../helpers/constants/design-system';
-import { getCurrentCurrency } from '../../../../selectors';
+import {
+  getCurrentCurrency,
+  getSelectedAccountCachedBalance,
+  getTokensMarketData,
+} from '../../../../selectors';
 import { getIntlLocale } from '../../../../ducks/locale/locale';
+import { EtherDenomination } from '../../../../../shared/constants/common';
+import { Numeric } from '../../../../../shared/modules/Numeric';
+import {
+  getConversionRate,
+  getNativeCurrency,
+} from '../../../../ducks/metamask/metamask';
 
 const renderPercentage = (value: string, color: TextColor) => {
   return (
@@ -58,7 +70,6 @@ const renderPercentageWithNumber = (
 
 export const PercentageChange = ({
   value,
-  valueChange,
   includeNumber = false,
 }: {
   value: number | null | undefined;
@@ -67,6 +78,33 @@ export const PercentageChange = ({
 }) => {
   const fiatCurrency = useSelector(getCurrentCurrency);
   const locale = useSelector(getIntlLocale);
+  const balanceValue = useSelector(getSelectedAccountCachedBalance);
+  const conversionRate = useSelector(getConversionRate);
+  const nativeCurrency = useSelector(getNativeCurrency);
+  const marketData = useSelector(getTokensMarketData);
+
+  const balanceChange = useMemo(() => {
+    const percentage1d = marketData?.[zeroAddress()]?.pricePercentChange1d;
+
+    if (isHexString(balanceValue)) {
+      let numeric = new Numeric(balanceValue, 16, EtherDenomination.WEI);
+      if (nativeCurrency !== fiatCurrency) {
+        numeric = numeric.applyConversionRate(conversionRate);
+      }
+
+      if (percentage1d) {
+        return numeric
+          .toBase(10)
+          .toDenomination(EtherDenomination.ETH)
+          .round(2, BigNumber.ROUND_HALF_DOWN)
+          .times(percentage1d, 10)
+          .divide(100, 10)
+          .toNumber();
+      }
+      return null;
+    }
+    return null;
+  }, []);
 
   let color = TextColor.textDefault;
   const isValidAmount = (amount: number | null | undefined): boolean =>
@@ -84,14 +122,17 @@ export const PercentageChange = ({
     ? `${(value as number) >= 0 ? '+' : ''}${(value as number).toFixed(2)}%`
     : '';
 
-  const formattedValuePrice = isValidAmount(valueChange)
-    ? `${(valueChange as number) >= 0 ? '+' : ''}(${Intl.NumberFormat(locale, {
-        notation: 'compact',
-        compactDisplay: 'short',
-        style: 'currency',
-        currency: fiatCurrency,
-        maximumFractionDigits: 2,
-      }).format(valueChange as number)}) `
+  const formattedValuePrice = isValidAmount(balanceChange)
+    ? `${(balanceChange as number) >= 0 ? '+' : ''}(${Intl.NumberFormat(
+        locale,
+        {
+          notation: 'compact',
+          compactDisplay: 'short',
+          style: 'currency',
+          currency: fiatCurrency,
+          maximumFractionDigits: 2,
+        },
+      ).format(balanceChange as number)}) `
     : '';
 
   return includeNumber

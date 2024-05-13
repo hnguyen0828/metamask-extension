@@ -147,8 +147,18 @@ export const txDataSelector = (state) => state.confirmTransaction.txData;
 const tokenDataSelector = (state) => state.confirmTransaction.tokenData;
 const tokenPropsSelector = (state) => state.confirmTransaction.tokenProps;
 
-const contractExchangeRatesSelector = (state) =>
-  state.metamask.contractExchangeRates;
+const contractExchangeRatesSelector = (state) => {
+  const chainId = getCurrentChainId(state);
+  const contractMarketData = state.metamask.marketData?.[chainId];
+
+  return Object.entries(contractMarketData).reduce(
+    (acc, [address, marketData]) => {
+      acc[address] = marketData.value;
+      return acc;
+    },
+    {},
+  );
+};
 
 const tokenDecimalsSelector = createSelector(
   tokenPropsSelector,
@@ -204,12 +214,15 @@ export const sendTokenTokenAmountAndToAddressSelector = createSelector(
 export const contractExchangeRateSelector = createSelector(
   contractExchangeRatesSelector,
   tokenAddressSelector,
-  (contractExchangeRates, tokenAddress) =>
-    contractExchangeRates[
-      Object.keys(contractExchangeRates).find((address) =>
-        isEqualCaseInsensitive(address, tokenAddress),
-      )
-    ],
+  (contractExchangeRates, tokenAddress) => {
+    console.log('HERE +++++++++++', contractExchangeRates);
+    return contractExchangeRates[
+      Object.keys(contractExchangeRates).find((address) => {
+        console.log('HERE 2222 -----', tokenAddress);
+        return isEqualCaseInsensitive(address, tokenAddress);
+      })
+    ];
+  },
 );
 
 export const transactionFeeSelector = function (state, txData) {

@@ -4,8 +4,8 @@ import {
   getCurrentChainId,
   getCurrentCurrency,
   getMetaMaskCachedBalances,
-  getTokenExchangeRates,
   getNativeCurrencyImage,
+  getTokenExchangeRates,
   getTokenList,
 } from '../selectors';
 import {

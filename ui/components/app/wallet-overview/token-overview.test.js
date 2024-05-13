@@ -65,7 +65,13 @@ describe('TokenOverview', () => {
           accounts: [],
         },
       ],
-      contractExchangeRates: {},
+      marketData: {
+        [CHAIN_IDS.MAINNET]: {},
+        [CHAIN_IDS.SEPOLIA]: {},
+        [CHAIN_IDS.PALM]: {},
+        [CHAIN_IDS.FANTOM]: {},
+        [CHAIN_IDS.POLYGON]: {},
+      },
       mmiConfiguration: {
         portfolio: {
           enabled: true,

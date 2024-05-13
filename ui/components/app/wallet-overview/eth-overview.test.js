@@ -136,7 +136,9 @@ describe('EthOverview', () => {
           accounts: [],
         },
       ],
-      contractExchangeRates: {},
+      marketData: {
+        '0x1': {},
+      },
     },
   };
 

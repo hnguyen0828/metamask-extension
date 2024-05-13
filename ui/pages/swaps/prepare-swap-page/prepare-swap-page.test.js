@@ -234,6 +234,9 @@ describe('PrepareSwapPage', () => {
     mockStore.metamask.providerConfig = {
       chainId: '0x539', // swaps testnet
     };
+    mockStore.metamask.marketData = {
+      '0x539': {},
+    };
     expect(
       Object.keys(mockStore.metamask.swapsState.quotes).length,
     ).toBeDefined();

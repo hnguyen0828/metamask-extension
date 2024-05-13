@@ -26,6 +26,9 @@ describe('CurrencyInput Component', () => {
         chainId: '0x5',
         ticker: 'ETH',
       },
+      marketData: {
+        '0x5': {},
+      },
       preferences: {
         showFiatInTestnets: true,
       },

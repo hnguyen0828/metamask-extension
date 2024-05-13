@@ -81,6 +81,9 @@ const baseStore = {
       medium: '1',
       fast: '2',
     },
+    marketData: {
+      [CHAIN_IDS.GOERLI]: {},
+    },
     internalAccounts: {
       accounts: {
         'cf8dace4-9439-4bd4-b3a8-88c821c8fcb3': {

@@ -28,8 +28,10 @@ const state = {
       },
       selectedAccount: 'cf8dace4-9439-4bd4-b3a8-88c821c8fcb3',
     },
-    contractExchangeRates: {
-      '0xAnotherToken': 0.015,
+    marketData: {
+      '0x1': {
+        '0xAnotherToken': { value: 0.015 },
+      },
     },
     useTokenDetection: true,
     tokenList: {
@@ -230,6 +232,7 @@ const state = {
     providerConfig: {
       type: 'mainnet',
       nickname: '',
+      chainId: '0x1',
     },
     currencyRates: {},
     preferences: {

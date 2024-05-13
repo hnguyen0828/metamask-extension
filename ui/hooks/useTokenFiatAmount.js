@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import {
-  getTokenExchangeRates,
   getCurrentCurrency,
   getShouldShowFiat,
   getConfirmationExchangeRates,
+  getTokenExchangeRates,
 } from '../selectors';
 import { getTokenFiatAmount } from '../helpers/utils/token-util';
 import { getConversionRate } from '../ducks/metamask/metamask';
@@ -34,11 +34,13 @@ export function useTokenFiatAmount(
     getTokenExchangeRates,
     shallowEqual,
   );
+
   const confirmationExchangeRates = useSelector(getConfirmationExchangeRates);
   const mergedRates = {
     ...contractExchangeRates,
     ...confirmationExchangeRates,
   };
+
   const conversionRate = useSelector(getConversionRate);
   const currentCurrency = useSelector(getCurrentCurrency);
   const userPrefersShownFiat = useSelector(getShouldShowFiat);

@@ -255,7 +255,7 @@ const EthOverview = ({ className, showAddress }) => {
             )}
             <PercentageChange
               value={tokensMarketData?.[zeroAddress()]?.pricePercentChange1d}
-              valueChange={tokensMarketData?.[zeroAddress()]?.priceChange1d}
+              conversionRate={tokensMarketData?.[zeroAddress()]?.value}
               includeNumber
             />
           </div>

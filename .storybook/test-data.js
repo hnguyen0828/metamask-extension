@@ -467,11 +467,8 @@ const state = {
         isEns: true,
       },
     ],
-    contractExchangeRates: {
-      '0xaD6D458402F60fD3Bd25163575031ACDce07538D': 0,
-    },
     marketData: {
-      '0x1': {
+      '0xaa36a7': {
         '0xaD6D458402F60fD3Bd25163575031ACDce07538D': {
           value: 0,
           contractPercentChange1d: 0.004,

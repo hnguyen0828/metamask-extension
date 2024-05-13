@@ -32,7 +32,7 @@ export default class TokenInput extends PureComponent {
       decimals: PropTypes.number,
       symbol: PropTypes.string,
     }).isRequired,
-    tokenExchangeRates: PropTypes.object,
+    marketData: PropTypes.object,
     nativeCurrency: PropTypes.string,
     tokens: PropTypes.array.isRequired,
   };
@@ -99,7 +99,7 @@ export default class TokenInput extends PureComponent {
 
   renderConversionComponent() {
     const {
-      tokenExchangeRates,
+      marketData,
       showFiat,
       currentCurrency,
       hideConversion,
@@ -114,7 +114,8 @@ export default class TokenInput extends PureComponent {
       isEqualCaseInsensitive(address, token.address),
     );
 
-    const tokenExchangeRate = tokenExchangeRates?.[existingToken?.address] ?? 0;
+    const tokenExchangeRate = marketData?.[existingToken?.address]?.value ?? 0;
+
     let currency, numberOfDecimals;
 
     if (hideConversion) {
