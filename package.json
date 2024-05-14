@@ -122,7 +122,6 @@
   },
   "resolutions": {
     "simple-update-notifier@^1.0.0": "^2.0.0",
-    "@metamask/assets-controllers@^29.0.0": "file:../core/packages/assets-controllers",
     "@babel/core": "patch:@babel/core@npm%3A7.23.2#~/.yarn/patches/@babel-core-npm-7.23.2-b93f586907.patch",
     "@types/react": "^16.9.53",
     "analytics-node/axios": "^0.21.2",
@@ -286,7 +285,7 @@
     "@metamask/address-book-controller": "^4.0.1",
     "@metamask/announcement-controller": "^6.1.0",
     "@metamask/approval-controller": "^6.0.1",
-    "@metamask/assets-controllers": "^29.0.0",
+    "@metamask/assets-controllers": "patch:@metamask/assets-controllers@npm%3A29.0.0#~/.yarn/patches/@metamask-assets-controllers-npm-29.0.0-012eec63f7.patch",
     "@metamask/base-controller": "^4.1.0",
     "@metamask/browser-passworder": "^4.3.0",
     "@metamask/contract-metadata": "^2.5.0",

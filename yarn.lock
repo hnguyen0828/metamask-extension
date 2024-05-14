@@ -4689,9 +4689,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/assets-controllers@file:../core/packages/assets-controllers::locator=metamask-crx%40workspace%3A.":
+"@metamask/assets-controllers@npm:29.0.0":
   version: 29.0.0
-  resolution: "@metamask/assets-controllers@file:../core/packages/assets-controllers#../core/packages/assets-controllers::hash=3e5d18&locator=metamask-crx%40workspace%3A."
+  resolution: "@metamask/assets-controllers@npm:29.0.0"
   dependencies:
     "@ethereumjs/util": "npm:^8.1.0"
     "@ethersproject/address": "npm:^5.7.0"
@@ -4727,7 +4727,49 @@ __metadata:
     "@metamask/keyring-controller": ^16.0.0
     "@metamask/network-controller": ^18.0.0
     "@metamask/preferences-controller": ^11.0.0
-  checksum: d787dd1c1a1752eac2afd080a553f5db7debf3cecd4fe31cc1049d21ddcfdc5672885b23b0e3c47a9ff3f58225168dda05805168abb6eb907b013dc08cc2ebc3
+  checksum: e200e5e9dbfd5a3277c08db3f9c45a9dcfb1b50954edc7f914d8cea8bef15982ee5cd559072e0970aa88d497e7b5d0cf48d601290e5659633489ac6ba5c4fb13
+  languageName: node
+  linkType: hard
+
+"@metamask/assets-controllers@patch:@metamask/assets-controllers@npm%3A29.0.0#~/.yarn/patches/@metamask-assets-controllers-npm-29.0.0-012eec63f7.patch":
+  version: 29.0.0
+  resolution: "@metamask/assets-controllers@patch:@metamask/assets-controllers@npm%3A29.0.0#~/.yarn/patches/@metamask-assets-controllers-npm-29.0.0-012eec63f7.patch::version=29.0.0&hash=ebb308"
+  dependencies:
+    "@ethereumjs/util": "npm:^8.1.0"
+    "@ethersproject/address": "npm:^5.7.0"
+    "@ethersproject/bignumber": "npm:^5.7.0"
+    "@ethersproject/contracts": "npm:^5.7.0"
+    "@ethersproject/providers": "npm:^5.7.0"
+    "@metamask/abi-utils": "npm:^2.0.2"
+    "@metamask/accounts-controller": "npm:^14.0.0"
+    "@metamask/approval-controller": "npm:^6.0.2"
+    "@metamask/base-controller": "npm:^5.0.2"
+    "@metamask/contract-metadata": "npm:^2.4.0"
+    "@metamask/controller-utils": "npm:^9.1.0"
+    "@metamask/eth-query": "npm:^4.0.0"
+    "@metamask/keyring-controller": "npm:^16.0.0"
+    "@metamask/metamask-eth-abis": "npm:^3.1.1"
+    "@metamask/network-controller": "npm:^18.1.0"
+    "@metamask/polling-controller": "npm:^6.0.2"
+    "@metamask/preferences-controller": "npm:^11.0.0"
+    "@metamask/rpc-errors": "npm:^6.2.1"
+    "@metamask/utils": "npm:^8.3.0"
+    "@types/bn.js": "npm:^5.1.5"
+    "@types/uuid": "npm:^8.3.0"
+    async-mutex: "npm:^0.2.6"
+    bn.js: "npm:^5.2.1"
+    cockatiel: "npm:^3.1.2"
+    lodash: "npm:^4.17.21"
+    multiformats: "npm:^9.5.2"
+    single-call-balance-checker-abi: "npm:^1.0.0"
+    uuid: "npm:^8.3.2"
+  peerDependencies:
+    "@metamask/accounts-controller": ^14.0.0
+    "@metamask/approval-controller": ^6.0.0
+    "@metamask/keyring-controller": ^16.0.0
+    "@metamask/network-controller": ^18.0.0
+    "@metamask/preferences-controller": ^11.0.0
+  checksum: b106427b17c4aefd8c0888bc2e9507c2f0edbf0c356adf93c8aac0c515d076a40541631b074d4f44363df2ca2c97ed2e06266cd525c04038bc8e5bb26a4a1622
   languageName: node
   linkType: hard
 
@@ -25089,7 +25131,7 @@ __metadata:
     "@metamask/address-book-controller": "npm:^4.0.1"
     "@metamask/announcement-controller": "npm:^6.1.0"
     "@metamask/approval-controller": "npm:^6.0.1"
-    "@metamask/assets-controllers": "npm:^29.0.0"
+    "@metamask/assets-controllers": "patch:@metamask/assets-controllers@npm%3A29.0.0#~/.yarn/patches/@metamask-assets-controllers-npm-29.0.0-012eec63f7.patch"
     "@metamask/auto-changelog": "npm:^2.1.0"
     "@metamask/base-controller": "npm:^4.1.0"
     "@metamask/browser-passworder": "npm:^4.3.0"
