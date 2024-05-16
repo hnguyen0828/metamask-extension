@@ -65,19 +65,19 @@ describe('PercentageChange Component', () => {
   });
   it('displays a positive value with a + sign and in green color', () => {
     render(<PercentageChange value={5.123} />);
-    const valueElement = screen.getByText('+5.12%');
+    const valueElement = screen.getByText('(+5.12%)');
     expect(valueElement).toBeInTheDocument();
   });
 
   it('displays a negative value with a - sign and in red color', () => {
     render(<PercentageChange value={-2.345} />);
-    const valueElement = screen.getByText('-2.35%');
+    const valueElement = screen.getByText('(-2.35%)');
     expect(valueElement).toBeInTheDocument();
   });
 
   it('displays a zero value with a + sign and in green color', () => {
     render(<PercentageChange value={0} />);
-    const valueElement = screen.getByText('+0.00%');
+    const valueElement = screen.getByText('(+0.00%)');
     expect(valueElement).toBeInTheDocument();
   });
 
@@ -104,12 +104,12 @@ describe('PercentageChange Component', () => {
     );
     const valueElement = screen.getByTestId('token-increase-decrease-value');
     expect(percentageElement).toHaveTextContent('');
-    expect(valueElement).toHaveTextContent('+($12.21)');
+    expect(valueElement).toHaveTextContent('+$12.21');
   });
 
   it('displays empty string without color if value is not a number', () => {
     render(<PercentageChange value={0} />);
-    const valueElement = screen.getByText('+0.00%');
+    const valueElement = screen.getByText('(+0.00%)');
     expect(valueElement).toBeInTheDocument();
   });
 
@@ -121,16 +121,16 @@ describe('PercentageChange Component', () => {
         includeNumber={true}
       />,
     );
-    const percentageElement = screen.getByText('+3.46%');
-    const numberElement = screen.getByText('+($12.21)');
+    const percentageElement = screen.getByText('(+3.46%)');
+    const numberElement = screen.getByText('+$12.21');
     expect(percentageElement).toBeInTheDocument();
     expect(numberElement).toBeInTheDocument();
   });
 
   it('displays negative percentage with number in error color', () => {
     render(<PercentageChange value={-1.234} includeNumber={true} />);
-    const percentageElement = screen.getByText('-1.23%');
-    const numberElement = screen.getByText('+($12.21)');
+    const percentageElement = screen.getByText('(-1.23%)');
+    const numberElement = screen.getByText('+$12.21');
     expect(percentageElement).toBeInTheDocument();
     expect(numberElement).toBeInTheDocument();
   });

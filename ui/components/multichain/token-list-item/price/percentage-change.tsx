@@ -119,20 +119,17 @@ export const PercentageChange = ({
   }
 
   const formattedValue = isValidAmount(value)
-    ? `${(value as number) >= 0 ? '+' : ''}${(value as number).toFixed(2)}%`
+    ? `(${(value as number) >= 0 ? '+' : ''}${(value as number).toFixed(2)}%)`
     : '';
 
   const formattedValuePrice = isValidAmount(balanceChange)
-    ? `${(balanceChange as number) >= 0 ? '+' : ''}(${Intl.NumberFormat(
-        locale,
-        {
-          notation: 'compact',
-          compactDisplay: 'short',
-          style: 'currency',
-          currency: fiatCurrency,
-          maximumFractionDigits: 2,
-        },
-      ).format(balanceChange as number)}) `
+    ? `${(balanceChange as number) >= 0 ? '+' : ''}${Intl.NumberFormat(locale, {
+        notation: 'compact',
+        compactDisplay: 'short',
+        style: 'currency',
+        currency: fiatCurrency,
+        maximumFractionDigits: 2,
+      }).format(balanceChange as number)} `
     : '';
 
   return includeNumber

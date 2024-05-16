@@ -9,7 +9,7 @@ exports[`PercentageChange Component render renders correctly 1`] = `
       class="mm-box mm-text mm-text--body-md mm-text--font-weight-normal mm-text--ellipsis mm-box--color-success-default"
       data-testid="token-increase-decrease-percentage"
     >
-      +5.12%
+      (+5.12%)
     </p>
   </div>
 </div>

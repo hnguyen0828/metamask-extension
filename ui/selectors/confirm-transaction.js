@@ -215,10 +215,8 @@ export const contractExchangeRateSelector = createSelector(
   contractExchangeRatesSelector,
   tokenAddressSelector,
   (contractExchangeRates, tokenAddress) => {
-    console.log('HERE +++++++++++', contractExchangeRates);
     return contractExchangeRates[
       Object.keys(contractExchangeRates).find((address) => {
-        console.log('HERE 2222 -----', tokenAddress);
         return isEqualCaseInsensitive(address, tokenAddress);
       })
     ];
