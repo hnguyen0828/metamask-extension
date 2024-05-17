@@ -27,6 +27,7 @@ import {
   BUTTON_SIZES,
   Box,
   Text,
+  ButtonPrimary,
 } from '../../../components/component-library';
 import TextField from '../../../components/ui/text-field';
 import ToggleButton from '../../../components/ui/toggle-button';
@@ -46,6 +47,11 @@ import {
 import IncomingTransactionToggle from '../../../components/app/incoming-trasaction-toggle/incoming-transaction-toggle';
 import ProfileSyncToggle from './profile-sync-toggle';
 import MetametricsToggle from './metametrics-toggle';
+import ClearMetametricsData from '../../../components/app/clear-metametrics-data';
+import {
+  DeleteRegulationStatus,
+} from '../../../../app/scripts/controllers/metametrics-data-deletion/metametrics-data-deletion';
+import { checkDataDeletionTaskStatus } from '../../../store/actions';
 
 export default class SecurityTab extends PureComponent {
   static contextTypes = {
@@ -89,6 +95,10 @@ export default class SecurityTab extends PureComponent {
     securityAlertsEnabled: PropTypes.bool,
     useExternalServices: PropTypes.bool,
     toggleExternalServices: PropTypes.func.isRequired,
+    showDeleteMetaMetricsDataModal: PropTypes.bool.isRequired,
+    setDeleteMetaMetricsDataModalOpen: PropTypes.func.isRequired,
+    metaMetricsDataDeletionStatus: PropTypes.string,
+    metaMetricsDataDeletionDate: PropTypes.string,
     ///: BEGIN:ONLY_INCLUDE_IF(blockaid)
     setSecurityAlertsEnabled: PropTypes.func,
     ///: END:ONLY_INCLUDE_IF
@@ -119,9 +129,10 @@ export default class SecurityTab extends PureComponent {
     handleSettingsRefs(t, t('securityAndPrivacy'), this.settingsRefs);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const { t } = this.context;
     handleSettingsRefs(t, t('securityAndPrivacy'), this.settingsRefs);
+    await checkDataDeletionTaskStatus();
   }
 
   toggleSetting(value, eventName, eventAction, toggleMethod) {
@@ -322,6 +333,67 @@ export default class SecurityTab extends PureComponent {
           />
         </div>
       </Box>
+    );
+  }
+
+  renderDeleteMetaMetricsData() {
+    const { t } = this.context;
+    const {
+      metaMetricsDataDeletionStatus,
+      metaMetricsDataDeletionDate,
+      participateInMetaMetrics,
+    } = this.props;
+    let dataDeletionButtonDisabled = false;
+    if (metaMetricsDataDeletionStatus) {
+      dataDeletionButtonDisabled =
+        [
+          DeleteRegulationStatus.INITIALIZED,
+          DeleteRegulationStatus.RUNNING,
+          DeleteRegulationStatus.FINISHED,
+        ].includes(metaMetricsDataDeletionStatus) && !participateInMetaMetrics;
+    }
+    return (
+      <>
+        <Box
+          className="settings-page__content-row"
+          data-testid="delete-metametrics-data"
+          display={Display.Flex}
+          flexDirection={FlexDirection.Column}
+          gap={4}
+        >
+          <div className="settings-page__content-item">
+            <span>{t('deleteMetaMetricsData')}</span>
+            <div className="settings-page__content-description">
+              {t('deleteMetaMetricsDataDescription', [
+              <b key="delete-MetaMetrics-Data-Desc-Bold">
+                {t('deleteMetaMetricsDataDescriptionBold')}
+              </b>,
+              <a
+                href={CONSENSYS_PRIVACY_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                key="metametrics-consensys-privacy-link"
+              >
+                {t('consensysPrivacyPolicy')}
+              </a>,
+            ])}
+            </div>
+          </div>
+          <div className="settings-page__content-item-col">
+            <ButtonPrimary
+              className="settings-page__button"
+              onClick={(event) => {
+                event.preventDefault();
+                this.props.setDeleteMetaMetricsDataModalOpen();
+              }}
+              disabled={dataDeletionButtonDisabled}
+            >
+              {t('deleteMetaMetricsData')}
+            </ButtonPrimary>
+          </div>
+        </Box>
+        {this.props.showDeleteMetaMetricsDataModal && <ClearMetametricsData />}
+      </>
     );
   }
 
@@ -1077,6 +1149,7 @@ export default class SecurityTab extends PureComponent {
         </span>
         <div className="settings-page__content-padded">
           <MetametricsToggle />
+          {this.renderDeleteMetaMetricsData()}
         </div>
       </div>
     );

@@ -2447,6 +2447,25 @@ export function getNameSources(state) {
   return state.metamask.nameSources || {};
 }
 
+export function getShowDeleteMetaMetricsDataModal(state) {
+  return state.appState.showDeleteMetaMetricsDataModal;
+}
+
+export function getParticipateInMetaMetrics(state) {
+  return state.metamask.participateInMetaMetrics;
+}
+
+export function getMetaMetricsDataDeletionId(state) {
+  return state.metamask.metaMetricsDataDeletionId;
+}
+
+export function getMetaMetricsDataDeletionDate(state) {
+  return state.metamask.metaMetricsDataDeletionDate;
+}
+
+export function getMetaMetricsDataDeletionStatus(state) {
+  return state.metamask.metaMetricsDataDeletionStatus;
+}
 ///: BEGIN:ONLY_INCLUDE_IF(desktop)
 /**
  * To get the `desktopEnabled` value which determines whether we use the desktop app
