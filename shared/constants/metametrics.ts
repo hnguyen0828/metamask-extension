@@ -539,6 +539,7 @@ export enum MetaMetricsEventName {
   KeyBatchAccountBalanceRequests = 'Key Batch account balance requests',
   MetricsOptIn = 'Metrics Opt In',
   MetricsOptOut = 'Metrics Opt Out',
+  MetricsDataDeletionRequest = 'Delete MetaMetrics Data Request Submitted',
   NavAccountMenuOpened = 'Account Menu Opened',
   NavConnectedSitesOpened = 'Connected Sites Opened',
   NavMainMenuOpened = 'Main Menu Opened',
