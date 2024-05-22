@@ -18,9 +18,9 @@ import {
   setUseSafeChainsListValidation,
   setUseExternalNameSources,
   setUseTransactionSimulations,
+  updateDataDeletionTaskStatus,
   ///: BEGIN:ONLY_INCLUDE_IF(blockaid)
   setSecurityAlertsEnabled,
-  checkDataDeletionTaskStatus,
   ///: END:ONLY_INCLUDE_IF
 } from '../../../store/actions';
 import {
@@ -138,8 +138,8 @@ const mapDispatchToProps = (dispatch) => {
     setDeleteMetaMetricsDataModalOpen: () => {
       return dispatch(openDeleteMetaMetricsDataModal());
     },
-    checkDataDeletionTaskStatus: () => {
-      return dispatch(checkDataDeletionTaskStatus());
+    updateDataDeletionTaskStatus: () => {
+      return dispatch(updateDataDeletionTaskStatus());
     },
     unMarkingMetaMetricsDataDeletion: () => {
       return dispatch(unMarkingMetaMetricsDataDeletion());

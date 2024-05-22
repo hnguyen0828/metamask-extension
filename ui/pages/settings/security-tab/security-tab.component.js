@@ -49,7 +49,7 @@ import ProfileSyncToggle from './profile-sync-toggle';
 import MetametricsToggle from './metametrics-toggle';
 import ClearMetametricsData from '../../../components/app/clear-metametrics-data';
 import { DeleteRegulationStatus } from '../../../../app/scripts/controllers/metametrics-data-deletion/metametrics-data-deletion';
-import { checkDataDeletionTaskStatus } from '../../../store/actions';
+import { updateDataDeletionTaskStatus } from '../../../store/actions';
 import { DataDeletionErrorModal } from '../../../components/app/clear-metametrics-data/DataDeletionErrorModal';
 
 export default class SecurityTab extends PureComponent {
@@ -136,7 +136,7 @@ export default class SecurityTab extends PureComponent {
   async componentDidMount() {
     const { t } = this.context;
     handleSettingsRefs(t, t('securityAndPrivacy'), this.settingsRefs);
-    await checkDataDeletionTaskStatus();
+    await updateDataDeletionTaskStatus();
     if (this.props.participateInMetaMetrics) {
       this.props.continueRecordingMetaMetricsData();
     }
