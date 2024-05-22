@@ -50,6 +50,7 @@ import MetametricsToggle from './metametrics-toggle';
 import ClearMetametricsData from '../../../components/app/clear-metametrics-data';
 import { DeleteRegulationStatus } from '../../../../app/scripts/controllers/metametrics-data-deletion/metametrics-data-deletion';
 import { checkDataDeletionTaskStatus } from '../../../store/actions';
+import { DataDeletionErrorModal } from '../../../components/app/clear-metametrics-data/DataDeletionErrorModal';
 
 export default class SecurityTab extends PureComponent {
   static contextTypes = {
@@ -95,6 +96,7 @@ export default class SecurityTab extends PureComponent {
     toggleExternalServices: PropTypes.func.isRequired,
     showDeleteMetaMetricsDataModal: PropTypes.bool.isRequired,
     setDeleteMetaMetricsDataModalOpen: PropTypes.func.isRequired,
+    showDataDeletionErrorModal: PropTypes.bool.isRequired,
     metaMetricsDataDeletionStatus: PropTypes.string,
     metaMetricsDataDeletionDate: PropTypes.string,
     metaMetricsDataDeletionMarked: PropTypes.bool.isRequired,
@@ -348,10 +350,13 @@ export default class SecurityTab extends PureComponent {
   renderDeleteMetaMetricsData() {
     const { t } = this.context;
     const {
+      hasRecordedMetricsSinceDeletion,
       metaMetricsDataDeletionStatus,
       metaMetricsDataDeletionDate,
       metaMetricsDataDeletionMarked,
-      hasRecordedMetricsSinceDeletion,
+      setDeleteMetaMetricsDataModalOpen,
+      showDeleteMetaMetricsDataModal,
+      showDataDeletionErrorModal,
     } = this.props;
 
     let dataDeletionButtonDisabled = false;
@@ -400,7 +405,7 @@ export default class SecurityTab extends PureComponent {
               className="settings-page__button"
               onClick={(event) => {
                 event.preventDefault();
-                this.props.setDeleteMetaMetricsDataModalOpen();
+                setDeleteMetaMetricsDataModalOpen();
               }}
               disabled={dataDeletionButtonDisabled}
             >
@@ -408,7 +413,8 @@ export default class SecurityTab extends PureComponent {
             </ButtonPrimary>
           </div>
         </Box>
-        {this.props.showDeleteMetaMetricsDataModal && <ClearMetametricsData />}
+        {showDeleteMetaMetricsDataModal && <ClearMetametricsData />}
+        {showDataDeletionErrorModal && <DataDeletionErrorModal />}
       </>
     );
   }
