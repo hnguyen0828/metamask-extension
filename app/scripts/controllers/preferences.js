@@ -49,9 +49,7 @@ export default class PreferencesController {
       useNonceField: false,
       usePhishDetect: true,
       dismissSeedBackUpReminder: false,
-      disabledRpcMethodPreferences: {
-        eth_sign: false,
-      },
+      disabledRpcMethodPreferences: {},
       useMultiAccountBalanceChecker: true,
       hasDismissedOpenSeaToBlockaidBanner: false,
       useSafeChainsListValidation: true,
