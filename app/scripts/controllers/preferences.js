@@ -49,7 +49,6 @@ export default class PreferencesController {
       useNonceField: false,
       usePhishDetect: true,
       dismissSeedBackUpReminder: false,
-      disabledRpcMethodPreferences: {},
       useMultiAccountBalanceChecker: true,
       hasDismissedOpenSeaToBlockaidBanner: false,
       useSafeChainsListValidation: true,
@@ -596,25 +595,6 @@ export default class PreferencesController {
   }
 
   /**
-   * A setter for the user preference to enable/disable rpc methods
-   *
-   * @param {string} methodName - The RPC method name to change the setting of
-   * @param {bool} isEnabled - true to enable the rpc method
-   */
-  async setDisabledRpcMethodPreference(methodName, isEnabled) {
-    const currentRpcMethodPreferences =
-      this.store.getState().disabledRpcMethodPreferences;
-    const updatedRpcMethodPreferences = {
-      ...currentRpcMethodPreferences,
-      [methodName]: isEnabled,
-    };
-
-    this.store.updateState({
-      disabledRpcMethodPreferences: updatedRpcMethodPreferences,
-    });
-  }
-
-  /**
    * A setter for the incomingTransactions in preference to be updated
    *
    * @param {string} chainId - chainId of the network
@@ -628,10 +608,6 @@ export default class PreferencesController {
 
   setServiceWorkerKeepAlivePreference(value) {
     this.store.updateState({ enableMV3TimestampSave: value });
-  }
-
-  getRpcMethodPreferences() {
-    return this.store.getState().disabledRpcMethodPreferences;
   }
 
   ///: BEGIN:ONLY_INCLUDE_IF(keyring-snaps)
