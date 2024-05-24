@@ -884,6 +884,7 @@ class Driver {
     const switchToIndex = await getSocketServer().switchToWindowWithTitle(
       title,
     );
+    console.log('switchToIndex', switchToIndex);
 
     // let windowHandles = await this.driver.getAllWindowHandles();
 
