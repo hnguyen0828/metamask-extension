@@ -479,6 +479,7 @@
     "@tsconfig/node20": "^20.1.2",
     "@types/babelify": "^7.3.7",
     "@types/browserify": "^12.0.37",
+    "@types/chrome": "^0.0.268",
     "@types/currency-formatter": "^1.5.1",
     "@types/fs-extra": "^9.0.13",
     "@types/gulp": "^4.0.9",
@@ -699,7 +700,7 @@
       "@storybook/test-runner>@swc/core": false,
       "@lavamoat/lavadome-react>@lavamoat/preinstall-always-fail": false,
       "ws>bufferutil": false,
-      "ws>utf-8-validate": false
+      "ws>utf-8-validate": false,
       "tsx>esbuild": false,
       "@metamask/eth-trezor-keyring>@trezor/connect-web>@trezor/connect>@trezor/protobuf>protobufjs": false,
       "firebase>@firebase/firestore>@grpc/proto-loader>protobufjs": false,
