@@ -497,6 +497,7 @@ export function getTargetAccount(state, targetAddress) {
 
 export const getTokenExchangeRates = (state) => {
   const chainId = getCurrentChainId(state);
+  console.log('Here ....', state.metamask);
   const contractMarketData = state.metamask.marketData?.[chainId] ?? {};
 
   return Object.entries(contractMarketData).reduce(

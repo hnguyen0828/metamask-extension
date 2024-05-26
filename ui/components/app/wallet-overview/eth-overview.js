@@ -70,7 +70,7 @@ import { getPortfolioUrl } from '../../../helpers/utils/portfolio';
 import { useIsOriginalNativeTokenSymbol } from '../../../hooks/useIsOriginalNativeTokenSymbol';
 import { getProviderConfig } from '../../../ducks/metamask/metamask';
 import { showPrimaryCurrency } from '../../../../shared/modules/currency-display.utils';
-import { PercentageChange } from '../../multichain/token-list-item/price';
+import { PercentageAndAmountChange } from '../../multichain/token-list-item/price/percentage-and-amount-change/percentage-and-amount-change';
 import WalletOverview from './wallet-overview';
 
 const EthOverview = ({ className, showAddress }) => {
@@ -253,10 +253,9 @@ const EthOverview = ({ className, showAddress }) => {
                 hideTitle
               />
             )}
-            <PercentageChange
+            <PercentageAndAmountChange
               value={tokensMarketData?.[zeroAddress()]?.pricePercentChange1d}
               conversionRate={tokensMarketData?.[zeroAddress()]?.value}
-              includeNumber
             />
           </div>
         </Tooltip>

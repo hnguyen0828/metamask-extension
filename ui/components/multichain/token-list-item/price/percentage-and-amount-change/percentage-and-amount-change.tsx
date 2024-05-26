@@ -2,41 +2,25 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { BigNumber } from 'bignumber.js';
 import { isHexString, zeroAddress } from 'ethereumjs-util';
-import { Text, Box } from '../../../component-library';
+import { Text, Box } from '../../../../component-library';
 import {
   Display,
   FontWeight,
   TextColor,
   TextVariant,
-} from '../../../../helpers/constants/design-system';
+} from '../../../../../helpers/constants/design-system';
 import {
   getCurrentCurrency,
   getSelectedAccountCachedBalance,
   getTokensMarketData,
-} from '../../../../selectors';
-import { getIntlLocale } from '../../../../ducks/locale/locale';
-import { EtherDenomination } from '../../../../../shared/constants/common';
-import { Numeric } from '../../../../../shared/modules/Numeric';
+} from '../../../../../selectors';
+import { getIntlLocale } from '../../../../../ducks/locale/locale';
+import { EtherDenomination } from '../../../../../../shared/constants/common';
+import { Numeric } from '../../../../../../shared/modules/Numeric';
 import {
   getConversionRate,
   getNativeCurrency,
-} from '../../../../ducks/metamask/metamask';
-
-const renderPercentage = (value: string, color: TextColor) => {
-  return (
-    <Box display={Display.Flex}>
-      <Text
-        fontWeight={FontWeight.Normal}
-        variant={TextVariant.bodyMd}
-        color={color}
-        data-testid="token-increase-decrease-percentage"
-        ellipsis
-      >
-        {value}
-      </Text>
-    </Box>
-  );
-};
+} from '../../../../../ducks/metamask/metamask';
 
 const renderPercentageWithNumber = (
   value: string,
@@ -68,13 +52,10 @@ const renderPercentageWithNumber = (
   );
 };
 
-export const PercentageChange = ({
+export const PercentageAndAmountChange = ({
   value,
-  includeNumber = false,
 }: {
   value: number | null | undefined;
-  valueChange?: number | null | undefined;
-  includeNumber?: boolean;
 }) => {
   const fiatCurrency = useSelector(getCurrentCurrency);
   const locale = useSelector(getIntlLocale);
@@ -88,8 +69,13 @@ export const PercentageChange = ({
 
     if (isHexString(balanceValue)) {
       let numeric = new Numeric(balanceValue, 16, EtherDenomination.WEI);
+
       if (nativeCurrency !== fiatCurrency) {
         numeric = numeric.applyConversionRate(conversionRate);
+      }
+
+      if (numeric.isZero()) {
+        return 0;
       }
 
       if (percentage1d) {
@@ -104,7 +90,7 @@ export const PercentageChange = ({
       return null;
     }
     return null;
-  }, []);
+  }, [marketData]);
 
   let color = TextColor.textDefault;
   const isValidAmount = (amount: number | null | undefined): boolean =>
@@ -132,7 +118,5 @@ export const PercentageChange = ({
       }).format(balanceChange as number)} `
     : '';
 
-  return includeNumber
-    ? renderPercentageWithNumber(formattedValue, formattedValuePrice, color)
-    : renderPercentage(formattedValue, color);
+  return renderPercentageWithNumber(formattedValue, formattedValuePrice, color);
 };

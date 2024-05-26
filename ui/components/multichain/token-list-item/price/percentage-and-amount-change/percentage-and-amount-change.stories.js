@@ -1,12 +1,12 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import testData from '../../../../../.storybook/test-data';
-import configureStore from '../../../../store/store';
-import { PercentageChange } from '.';
+import testData from '../../../../../../.storybook/test-data';
+import configureStore from '../../../../../store/store';
+import { PercentageAndAmountChange } from './percentage-and-amount-change';
 
 export default {
-  title: 'Components/App/PercentageChange',
-  component: PercentageChange,
+  title: 'Components/App/PercentageAndAmountChange',
+  component: PercentageAndAmountChange,
   argTypes: {
     value: {
       control: 'number',
@@ -20,8 +20,6 @@ export default {
   },
   args: {
     value: 5.23,
-    valueChange: 100,
-    includeNumber: true,
   },
 };
 
@@ -38,7 +36,7 @@ const customStore = configureStore(customData);
 const Template = (args) => {
   return (
     <Provider store={customStore}>
-      <PercentageChange {...args} />
+      <PercentageAndAmountChange {...args} />
     </Provider>
   );
 };
@@ -65,7 +63,7 @@ NoChange.args = {
 
 export const WithCustomFormatting = (args) => (
   <div style={{ padding: '20px', backgroundColor: '#f0f0f0' }}>
-    <PercentageChange {...args} />
+    <PercentageAndAmountChange {...args} />
   </div>
 );
 WithCustomFormatting.decorators = [
