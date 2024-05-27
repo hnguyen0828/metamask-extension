@@ -27,19 +27,12 @@ import {
   getAllNetworks,
   ///: BEGIN:ONLY_INCLUDE_IF(blockaid)
   getIsSecurityAlertsEnabled,
-  getMetaMetricsDataDeletionDate,
-  getMetaMetricsDataDeletionStatus,
   ///: END:ONLY_INCLUDE_IF
   getPetnamesEnabled,
-  getShowDeleteMetaMetricsDataModal,
-  isMetaMetricsDataDeletionMarked,
-  hasRecordedMetricsSinceDeletion,
-  getShowDataDeletionErrorModal,
 } from '../../../selectors';
 import {
   continueRecordingMetaMetricsData,
   openBasicFunctionalityModal,
-  openDeleteMetaMetricsDataModal,
   unMarkingMetaMetricsDataDeletion,
 } from '../../../ducks/app/app';
 import SecurityTab from './security-tab.component';
@@ -93,12 +86,6 @@ const mapStateToProps = (state) => {
     securityAlertsEnabled: getIsSecurityAlertsEnabled(state),
     ///: END:ONLY_INCLUDE_IF
     useTransactionSimulations: metamask.useTransactionSimulations,
-    showDeleteMetaMetricsDataModal: getShowDeleteMetaMetricsDataModal(state),
-    showDataDeletionErrorModal: getShowDataDeletionErrorModal(state),
-    metaMetricsDataDeletionStatus: getMetaMetricsDataDeletionStatus(state),
-    metaMetricsDataDeletionDate: getMetaMetricsDataDeletionDate(state),
-    metaMetricsDataDeletionMarked: isMetaMetricsDataDeletionMarked(state),
-    hasRecordedMetricsSinceDeletion: hasRecordedMetricsSinceDeletion(state),
   };
 };
 
@@ -134,9 +121,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     setUseTransactionSimulations: (value) => {
       return dispatch(setUseTransactionSimulations(value));
-    },
-    setDeleteMetaMetricsDataModalOpen: () => {
-      return dispatch(openDeleteMetaMetricsDataModal());
     },
     updateDataDeletionTaskStatus: () => {
       return dispatch(updateDataDeletionTaskStatus());

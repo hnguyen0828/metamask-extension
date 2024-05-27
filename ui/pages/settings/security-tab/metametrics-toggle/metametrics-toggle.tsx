@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useI18nContext } from '../../../../hooks/useI18nContext';
 import { MetaMetricsContext } from '../../../../contexts/metametrics';
 import {
@@ -21,9 +21,11 @@ import {
   TextColor,
   TextVariant,
 } from '../../../../helpers/constants/design-system';
+import { continueRecordingMetaMetricsData } from '../../../../ducks/app/app';
 
 const MetametricsToggle = () => {
   const t = useI18nContext();
+  const dispatch = useDispatch();
   const trackEvent = useContext(MetaMetricsContext);
   const { enableMetametrics, error: enableMetametricsError } =
     useEnableMetametrics();
@@ -56,6 +58,7 @@ const MetametricsToggle = () => {
           participateInMetaMetrics,
         },
       });
+      dispatch(continueRecordingMetaMetricsData());
     }
   };
 
