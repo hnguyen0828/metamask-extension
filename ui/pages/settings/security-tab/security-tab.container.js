@@ -31,7 +31,6 @@ import {
   getPetnamesEnabled,
 } from '../../../selectors';
 import {
-  continueRecordingMetaMetricsData,
   openBasicFunctionalityModal,
   unMarkingMetaMetricsDataDeletion,
 } from '../../../ducks/app/app';
@@ -47,7 +46,6 @@ const mapStateToProps = (state) => {
 
   const {
     incomingTransactionsPreferences,
-    participateInMetaMetrics,
     usePhishDetect,
     useTokenDetection,
     ipfsGateway,
@@ -68,7 +66,6 @@ const mapStateToProps = (state) => {
     warning,
     incomingTransactionsPreferences,
     allNetworks,
-    participateInMetaMetrics,
     usePhishDetect,
     useTokenDetection,
     ipfsGateway,
@@ -127,9 +124,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     unMarkingMetaMetricsDataDeletion: () => {
       return dispatch(unMarkingMetaMetricsDataDeletion());
-    },
-    continueRecordingMetaMetricsData: () => {
-      return dispatch(continueRecordingMetaMetricsData());
     },
     ///: BEGIN:ONLY_INCLUDE_IF(blockaid)
     setSecurityAlertsEnabled: (value) => setSecurityAlertsEnabled(value),

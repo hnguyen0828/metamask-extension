@@ -91,8 +91,6 @@ export default class SecurityTab extends PureComponent {
     securityAlertsEnabled: PropTypes.bool,
     useExternalServices: PropTypes.bool,
     toggleExternalServices: PropTypes.func.isRequired,
-    participateInMetaMetrics: PropTypes.bool.isRequired,
-    continueRecordingMetaMetricsData: PropTypes.func.isRequired,
     unMarkingMetaMetricsDataDeletion: PropTypes.func.isRequired,
     ///: BEGIN:ONLY_INCLUDE_IF(blockaid)
     setSecurityAlertsEnabled: PropTypes.func,
@@ -128,9 +126,6 @@ export default class SecurityTab extends PureComponent {
     const { t } = this.context;
     handleSettingsRefs(t, t('securityAndPrivacy'), this.settingsRefs);
     await updateDataDeletionTaskStatus();
-    if (this.props.participateInMetaMetrics) {
-      this.props.continueRecordingMetaMetricsData();
-    }
   }
 
   componentWillUnmount() {
