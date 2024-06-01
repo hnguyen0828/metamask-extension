@@ -9,10 +9,11 @@ import {
 } from '../../../../../helpers/constants/design-system';
 import { useI18nContext } from '../../../../../hooks/useI18nContext';
 import { currentConfirmationSelector } from '../../../../../selectors';
-import { Confirmation } from '../../../types/confirm';
 import useAlerts from '../../../../../hooks/useAlerts';
 import { getHighestSeverity } from '../../../../../components/app/alert-system/utils';
 import GeneralAlert from '../../../../../components/app/alert-system/general-alert/general-alert';
+import { SignatureRequestType } from '../../../types/confirm';
+import { isPermitSignatureRequest } from '../../../utils';
 
 function ConfirmBannerAlert({ ownerId }: { ownerId: string }) {
   const t = useI18nContext();
@@ -51,28 +52,34 @@ function ConfirmBannerAlert({ ownerId }: { ownerId: string }) {
 
 const ConfirmTitle: React.FC = memo(() => {
   const t = useI18nContext();
-  const currentConfirmation = useSelector(
-    currentConfirmationSelector,
-  ) as Confirmation;
+  const currentConfirmation = useSelector(currentConfirmationSelector);
 
   const typeToTitleTKey: Partial<Record<TransactionType, string>> = useMemo(
     () => ({
       [TransactionType.personalSign]: t('confirmTitleSignature'),
-      [TransactionType.signTypedData]: t('confirmTitleSignature'),
+      [TransactionType.signTypedData]: isPermitSignatureRequest(
+        currentConfirmation as SignatureRequestType,
+      )
+        ? t('confirmTitlePermitSignature')
+        : t('confirmTitleSignature'),
       [TransactionType.contractInteraction]: t('confirmTitleTransaction'),
     }),
-    [],
+    [currentConfirmation],
   );
 
   const typeToDescTKey: Partial<Record<TransactionType, string>> = useMemo(
     () => ({
       [TransactionType.personalSign]: t('confirmTitleDescSignature'),
-      [TransactionType.signTypedData]: t('confirmTitleDescSignature'),
+      [TransactionType.signTypedData]: isPermitSignatureRequest(
+        currentConfirmation as SignatureRequestType,
+      )
+        ? t('confirmTitleDescPermitSignature')
+        : t('confirmTitleDescSignature'),
       [TransactionType.contractInteraction]: t(
         'confirmTitleDescContractInteractionTransaction',
       ),
     }),
-    [],
+    [currentConfirmation],
   );
 
   if (!currentConfirmation) {

@@ -887,8 +887,14 @@
   "confirmTitleDescSignature": {
     "message": "Only confirm this message if you approve the content and trust the requesting site."
   },
+  "confirmTitleDescPermitSignature": {
+    "message": "This site wants permission to spend your tokens."
+  },
   "confirmTitleSignature": {
     "message": "Signature request"
+  },
+  "confirmTitlePermitSignature": {
+    "message": "Spending cap request"
   },
   "confirmTitleTransaction": {
     "message": "Transaction request"
@@ -3888,13 +3894,19 @@
     "message": "This is where you can see the permissions you've given to installed Snaps or connected sites."
   },
   "permissionsPageTourDescription": {
-    "message": "This is your control panel for managing permissions given to connected sites and installed Snaps."
+    "message": "You're giving the spender permission to spend this many tokens from your account."
   },
   "permissionsPageTourTitle": {
     "message": "Connected sites are now permissions"
   },
   "permitSimulationDetailInfo": {
     "message": "This transaction gives permission to withdraw your tokens"
+  },
+  "permitSimulationSpendingCap": {
+    "message": "Spending cap"
+  },
+  "spender": {
+    "message": "Spender"
   },
   "personalAddressDetected": {
     "message": "Personal address detected. Input the token contract address."
