@@ -884,17 +884,17 @@
   "confirmTitleDescContractInteractionTransaction": {
     "message": "Only confirm this transaction if you fully understand the content and trust the requesting site."
   },
-  "confirmTitleDescSignature": {
-    "message": "Only confirm this message if you approve the content and trust the requesting site."
-  },
   "confirmTitleDescPermitSignature": {
     "message": "This site wants permission to spend your tokens."
   },
-  "confirmTitleSignature": {
-    "message": "Signature request"
+  "confirmTitleDescSignature": {
+    "message": "Only confirm this message if you approve the content and trust the requesting site."
   },
   "confirmTitlePermitSignature": {
     "message": "Spending cap request"
+  },
+  "confirmTitleSignature": {
+    "message": "Signature request"
   },
   "confirmTitleTransaction": {
     "message": "Transaction request"
@@ -3905,9 +3905,6 @@
   "permitSimulationSpendingCap": {
     "message": "Spending cap"
   },
-  "spender": {
-    "message": "Spender"
-  },
   "personalAddressDetected": {
     "message": "Personal address detected. Input the token contract address."
   },
@@ -5024,6 +5021,9 @@
   },
   "spendLimitTooLarge": {
     "message": "Spend limit too large"
+  },
+  "spender": {
+    "message": "Spender"
   },
   "spendingCap": {
     "message": "Spending cap"
