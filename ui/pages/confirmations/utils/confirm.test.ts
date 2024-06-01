@@ -3,6 +3,10 @@ import { ApprovalType } from '@metamask/controller-utils';
 import { TransactionType } from '@metamask/transaction-controller';
 
 import {
+  permitSignatureMsg,
+  unapprovedTypedSignMsgV4,
+} from '../../../../test/data/confirmations/typed_sign';
+import {
   isSignatureApprovalRequest,
   isSignatureTransactionType,
   parseSanitizeTypedDataMessage,
@@ -68,6 +72,17 @@ describe('confirm util', () => {
       const result = isSignatureTransactionType({
         type: TransactionType.contractInteraction,
       });
+      expect(result).toStrictEqual(false);
+    });
+  });
+
+  describe('isPermitSignatureRequest', () => {
+    it('returns true for permit signature requests', () => {
+      const result = isSignatureTransactionType(permitSignatureMsg);
+      expect(result).toStrictEqual(true);
+    });
+    it('returns false for request not of type permit signature', () => {
+      const result = isSignatureTransactionType(unapprovedTypedSignMsgV4);
       expect(result).toStrictEqual(false);
     });
   });
