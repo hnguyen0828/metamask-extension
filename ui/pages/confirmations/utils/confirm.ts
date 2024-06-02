@@ -50,7 +50,11 @@ export const isSIWESignatureRequest = (request: SignatureRequestType) =>
   request.msgParams?.siwe?.isSIWEMessage;
 
 export const isPermitSignatureRequest = (request: SignatureRequestType) => {
-  if (!isSignatureTransactionType(request)) {
+  if (
+    !request ||
+    !isSignatureTransactionType(request) ||
+    request.type !== 'eth_signTypedData'
+  ) {
     return false;
   }
   const { primaryType } = parseTypedDataMessage(
