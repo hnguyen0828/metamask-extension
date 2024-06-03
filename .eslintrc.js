@@ -3,6 +3,8 @@ const path = require('node:path');
 const ts = require('typescript');
 const { version: reactVersion } = require('react/package.json');
 
+const { legacyMochaTests } = require('./test/mocha/legacy-mocha-tests');
+
 const tsconfigPath = ts.findConfigFile('./', ts.sys.fileExists);
 const { config } = ts.readConfigFile(tsconfigPath, ts.sys.readFile);
 const tsconfig = ts.parseJsonConfigFileContent(config, ts.sys, './');
@@ -261,26 +263,7 @@ module.exports = {
      * Mocha library.
      */
     {
-      files: [
-        '**/*.test.js',
-        'test/lib/wait-until-called.js',
-        'test/e2e/**/*.spec.js',
-      ],
-      excludedFiles: [
-        'app/scripts/controllers/app-state.test.js',
-        'app/scripts/controllers/mmi-controller.test.js',
-        'app/scripts/controllers/permissions/**/*.test.js',
-        'app/scripts/controllers/preferences.test.js',
-        'app/scripts/lib/**/*.test.js',
-        'app/scripts/metamask-controller.test.js',
-        'app/scripts/migrations/*.test.js',
-        'app/scripts/platforms/*.test.js',
-        'development/**/*.test.js',
-        'shared/**/*.test.js',
-        'ui/**/*.test.js',
-        'ui/__mocks__/*.js',
-        'test/e2e/helpers.test.js',
-      ],
+      files: [...legacyMochaTests, 'test/e2e/**/*.spec.js'],
       extends: ['@metamask/eslint-config-mocha'],
       rules: {
         // In Mocha tests, it is common to use `this` to store values or do
@@ -298,26 +281,18 @@ module.exports = {
     {
       files: [
         '**/__snapshots__/*.snap',
-        'app/scripts/controllers/app-state.test.js',
-        'app/scripts/controllers/mmi-controller.test.ts',
-        'app/scripts/controllers/permissions/**/*.test.js',
-        'app/scripts/controllers/preferences.test.js',
-        'app/scripts/lib/**/*.test.js',
-        'app/scripts/metamask-controller.test.js',
-        'app/scripts/migrations/*.test.js',
-        'app/scripts/platforms/*.test.js',
-        'development/**/*.test.js',
-        'development/**/*.test.ts',
+        '**/__mocks__/*.js',
+        'app/scripts/**/*.test.js',
+        'app/scripts/**/*.test.ts',
+        'app/scripts/**/*.test.tsx',
         'shared/**/*.test.js',
         'shared/**/*.test.ts',
-        'test/helpers/*.js',
-        'test/jest/*.js',
-        'test/lib/timer-helpers.js',
-        'test/e2e/helpers.test.js',
+        'shared/**/*.test.tsx',
         'ui/**/*.test.js',
-        'ui/__mocks__/*.js',
-        'shared/lib/error-utils.test.js',
+        'ui/**/*.test.ts',
+        'ui/**/*.test.tsx',
       ],
+      excludedFiles: legacyMochaTests,
       extends: ['@metamask/eslint-config-jest'],
       parserOptions: {
         sourceType: 'module',
