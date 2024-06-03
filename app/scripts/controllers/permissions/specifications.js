@@ -12,6 +12,7 @@ import {
   CaveatTypes,
   RestrictedMethods,
 } from '../../../../shared/constants/permissions';
+import { isEthAddress } from '../../lib/util';
 
 /**
  * This file contains the specifications of the permissions and caveats
@@ -78,8 +79,7 @@ export const getCaveatSpecifications = ({ getInternalAccounts }) => {
  * }} options - Options bag.
  * @param options.getAllAccounts - A function that returns all Ethereum accounts
  * in the current MetaMask instance.
- * @param options.getInternalAccounts - A function that returns the
- * `AccountsController` internalAccount objects for all accounts in the
+ * @param options.getInternalAccounts - A function that returns the internalAccount objects for all accounts in the `AccountsController`
  * @param options.captureKeyringTypesWithMissingIdentities - A function that
  * captures extra error information about the "Missing identity for address"
  * error.
@@ -116,7 +116,7 @@ export const getPermissionSpecifications = ({
 
       methodImplementation: async (_args) => {
         const accounts = (await getAllAccounts()).filter(isEthAddress);
-        const internalAccounts = getInternalAccounts('eip155:*');
+        const internalAccounts = getInternalAccounts();
 
         return accounts.sort((firstAddress, secondAddress) => {
           const firstAccount = internalAccounts.find(

@@ -13,6 +13,7 @@ import {
   getSubjectMetadata,
   getTargetSubjectMetadata,
 } from '.';
+import { isEvmAccountType } from '@metamask/keyring-api';
 
 // selectors
 
@@ -342,6 +343,7 @@ export function getOrderedConnectedAccountsForConnectedDapp(state, activeTab) {
 
   return orderedAccounts
     .filter((account) => connectedAccounts.includes(account.address))
+    .filter((account) => isEvmAccountType(account.type))
     .map((account) => ({
       ...account,
       metadata: {

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { SubjectType } from '@metamask/permission-controller';
+import { isEvmAccountType } from '@metamask/keyring-api';
 import { useI18nContext } from '../../../hooks/useI18nContext';
 import PermissionsConnectFooter from '../../../components/app/permissions-connect-footer';
 import AccountList from '../../../components/ui/account-list';
@@ -15,6 +16,7 @@ import {
   TextVariant,
 } from '../../../helpers/constants/design-system';
 import { Box, Text } from '../../../components/component-library';
+import { isEthAddress } from '../../../../app/scripts/lib/util';
 
 const ChooseAccount = ({
   selectedAccountAddresses,
@@ -44,7 +46,9 @@ const ChooseAccount = ({
 
   const selectAll = () => {
     const newSelectedAccounts = new Set(
-      accounts.map((account) => account.address),
+      accounts
+        .filter((account) => isEvmAccountType(account.type))
+        .map((account) => account.address),
     );
     setSelectedAccounts(newSelectedAccounts);
   };
@@ -54,7 +58,14 @@ const ChooseAccount = ({
   };
 
   const allAreSelected = () => {
-    return accounts.length === selectedAccounts.size;
+    return (
+      accounts.filter((account) => isEvmAccountType(account.type)).length ===
+      selectedAccounts.size
+    );
+  };
+
+  const hasNonEvmAccounts = () => {
+    return !Object.key(selectedAccountAddresses).every(isEthAddress);
   };
 
   const getHeaderText = () => {
@@ -123,7 +134,7 @@ const ChooseAccount = ({
           cancelText={t('cancel')}
           onSubmit={() => selectAccounts(selectedAccounts)}
           submitText={t('next')}
-          disabled={selectedAccounts.size === 0}
+          disabled={hasNonEvmAccounts() || selectedAccounts.size === 0}
         />
       </Box>
     </>

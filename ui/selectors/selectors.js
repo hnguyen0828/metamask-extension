@@ -155,6 +155,13 @@ export function getNetworkIdentifier(state) {
   return nickname || rpcUrl || type;
 }
 
+/**
+ * **Warning** This function is specifically for EVM networks.
+ * Retrieves the current chain ID from the state.
+ *
+ * @param state - The application state object.
+ * @returns The current chain ID.
+ */
 export function getCurrentChainId(state) {
   const { chainId } = getProviderConfig(state);
   return chainId;
