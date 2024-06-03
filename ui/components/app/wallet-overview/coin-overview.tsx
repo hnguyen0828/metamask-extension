@@ -1,8 +1,20 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
+import {
+  useHistory,
+  ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
+  useLocation,
+  ///: END:ONLY_INCLUDE_IF
+} from 'react-router-dom';
+
+import { toHex } from '@metamask/controller-utils';
+import { CaipChainId, isCaipChainId } from '@metamask/utils';
 ///: BEGIN:ONLY_INCLUDE_IF(build-mmi)
-import { CaipChainId } from '@metamask/utils';
+import {
+  getMmiPortfolioEnabled,
+  getMmiPortfolioUrl,
+} from '../../../selectors/institutional/selectors';
 ///: END:ONLY_INCLUDE_IF
 import { I18nContext } from '../../../contexts/i18n';
 import Tooltip from '../../ui/tooltip';
@@ -19,12 +31,14 @@ import Spinner from '../../ui/spinner';
 import { useIsOriginalNativeTokenSymbol } from '../../../hooks/useIsOriginalNativeTokenSymbol';
 import { getProviderConfig } from '../../../ducks/metamask/metamask';
 import { showPrimaryCurrency } from '../../../../shared/modules/currency-display.utils';
+import { ChainId } from '../../../../shared/constants/network';
 import WalletOverview from './wallet-overview';
 import CoinButtons from './coin-buttons';
 
 export type CoinOverviewProps = {
   balance: string;
   balanceIsCached: boolean;
+  balanceRaw: boolean;
   className: string;
   classPrefix: string;
   chainId: CaipChainId | number;
@@ -34,6 +48,7 @@ export type CoinOverviewProps = {
   defaultSwapsToken?: SwapsEthToken;
   isBridgeChain: boolean;
   isBuyableChain: boolean;
+  isBuyableChainWithoutSigning: boolean;
   ///: END:ONLY_INCLUDE_IF
   isSwapsChain: boolean;
   isSigningEnabled: boolean;
@@ -42,6 +57,7 @@ export type CoinOverviewProps = {
 export const CoinOverview = ({
   balance,
   balanceIsCached,
+  balanceRaw,
   className,
   classPrefix = 'coin',
   chainId,
@@ -49,6 +65,7 @@ export const CoinOverview = ({
   defaultSwapsToken,
   isBridgeChain,
   isBuyableChain,
+  isBuyableChainWithoutSigning,
   ///: END:ONLY_INCLUDE_IF
   isSwapsChain,
   isSigningEnabled,
@@ -93,6 +110,7 @@ export const CoinOverview = ({
                   )}
                   data-testid={`${classPrefix}-overview__primary-currency`}
                   value={balance}
+                  displayValue={balanceRaw ? balance : undefined}
                   type={
                     showPrimaryCurrency(
                       isOriginalNativeSymbol,
@@ -121,6 +139,7 @@ export const CoinOverview = ({
                 })}
                 data-testid={`${classPrefix}-overview__secondary-currency`}
                 value={balance}
+                displayValue={balanceRaw ? balance : undefined}
                 type={SECONDARY}
                 ethNumberOfDecimals={4}
                 hideTitle
@@ -138,6 +157,7 @@ export const CoinOverview = ({
             ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
             isBridgeChain,
             isBuyableChain,
+            isBuyableChainWithoutSigning,
             defaultSwapsToken,
             ///: END:ONLY_INCLUDE_IF
             classPrefix,

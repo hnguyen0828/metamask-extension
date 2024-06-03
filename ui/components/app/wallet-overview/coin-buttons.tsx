@@ -6,9 +6,11 @@ import {
   useLocation,
   ///: END:ONLY_INCLUDE_IF
 } from 'react-router-dom';
+import { toHex } from '@metamask/controller-utils';
+import { CaipChainId, isCaipChainId } from '@metamask/utils';
+import { ChainId } from '../../../../shared/constants/network';
 
 ///: BEGIN:ONLY_INCLUDE_IF(build-mmi)
-import { CaipChainId } from '@metamask/utils';
 import {
   getMmiPortfolioEnabled,
   getMmiPortfolioUrl,
@@ -65,17 +67,21 @@ const CoinButtons = ({
   ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
   isBridgeChain,
   isBuyableChain,
+  isBuyableChainWithoutSigning,
   defaultSwapsToken,
   ///: END:ONLY_INCLUDE_IF
   classPrefix = 'coin',
 }: {
-  classPrefix?: string;
-  isBuyableChain: boolean;
-  isSigningEnabled: boolean;
-  isSwapsChain: boolean;
-  isBridgeChain: boolean;
   chainId: `0x${string}` | CaipChainId | number;
+  isSwapsChain: boolean;
+  isSigningEnabled: boolean;
+  ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
+  isBridgeChain: boolean;
+  isBuyableChain: boolean;
+  isBuyableChainWithoutSigning: boolean;
   defaultSwapsToken?: SwapsEthToken;
+  ///: END:ONLY_INCLUDE_IF
+  classPrefix?: string;
 }) => {
   const t = useContext(I18nContext);
   const dispatch = useDispatch();
@@ -96,7 +102,10 @@ const CoinButtons = ({
       ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
       { condition: !isBuyableChain, message: '' },
       ///: END:ONLY_INCLUDE_IF
-      { condition: !isSigningEnabled, message: 'methodNotSupported' },
+      {
+        condition: !(isSigningEnabled || isBuyableChainWithoutSigning),
+        message: 'methodNotSupported',
+      },
     ],
     sendButton: [
       { condition: !isSigningEnabled, message: 'methodNotSupported' },
@@ -127,6 +136,14 @@ const CoinButtons = ({
       );
     }
     return contents;
+  };
+
+  const getChainId = (): CaipChainId | ChainId => {
+    if (isCaipChainId(chainId)) {
+      return chainId as CaipChainId;
+    }
+    // Otherwise we assume that's an EVM chain ID, so use the usual 0x prefix
+    return toHex(chainId) as ChainId;
   };
 
   ///: BEGIN:ONLY_INCLUDE_IF(build-mmi)
@@ -310,7 +327,10 @@ const CoinButtons = ({
           Icon={
             <Icon name={IconName.PlusMinus} color={IconColor.primaryInverse} />
           }
-          disabled={!isBuyableChain || !isSigningEnabled}
+          disabled={
+            !isBuyableChain ||
+            !(isSigningEnabled || isBuyableChainWithoutSigning)
+          }
           data-testid={`${classPrefix}-overview-buy`}
           label={t('buyAndSell')}
           onClick={handleBuyAndSellOnClick}
