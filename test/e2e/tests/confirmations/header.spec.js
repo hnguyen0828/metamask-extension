@@ -13,7 +13,7 @@ const SIGNATURE_CONFIRMATIONS = [
   { name: 'Sign Typed Data signature', testDAppBtnId: 'signTypedData' },
   { name: 'Sign Typed Data v3 signature', testDAppBtnId: 'signTypedDataV3' },
   { name: 'Sign Typed Data v4 signature', testDAppBtnId: 'signTypedDataV4' },
-  // { name: 'Sign Permit signature', testDAppBtnId: 'signPermit' },
+  { name: 'Sign Permit signature', testDAppBtnId: 'signPermit' },
 ];
 
 const WALLET_ADDRESS = '0x5CfE73b6021E818B776b421B1c4Db2474086a7e1';

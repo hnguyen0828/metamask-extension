@@ -53,7 +53,8 @@ export const isPermitSignatureRequest = (request: SignatureRequestType) => {
   if (
     !request ||
     !isSignatureTransactionType(request) ||
-    request.type !== 'eth_signTypedData'
+    request.type !== 'eth_signTypedData' ||
+    request.msgParams?.version?.toLowerCase() === 'v1'
   ) {
     return false;
   }
