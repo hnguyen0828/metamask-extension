@@ -65,7 +65,7 @@ const ChooseAccount = ({
   };
 
   const hasNonEvmAccounts = () => {
-    return !Object.key(selectedAccountAddresses).every(isEthAddress);
+    return !Object.keys(selectedAccountAddresses).every(isEthAddress);
   };
 
   const getHeaderText = () => {
