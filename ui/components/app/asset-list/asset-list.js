@@ -6,23 +6,23 @@ import { PRIMARY, SECONDARY } from '../../../helpers/constants/common';
 import { useUserPreferencedCurrency } from '../../../hooks/useUserPreferencedCurrency';
 import {
   getSelectedAccountCachedBalance,
-  getShouldShowFiat,
-  getNativeCurrencyImage,
   getDetectedTokensInCurrentNetwork,
   getIstokenDetectionInactiveOnNonMainnetSupportedNetwork,
   getShouldHideZeroBalanceTokens,
   ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
   getIsBuyableChain,
   ///: END:ONLY_INCLUDE_IF
-  getCurrentNetwork,
   getSelectedAccount,
   getPreferences,
   getIsMainnet,
 } from '../../../selectors';
 import {
-  getNativeCurrency,
-  getProviderConfig,
-} from '../../../ducks/metamask/metamask';
+  getMultichainCurrentNetwork,
+  getMultichainNativeCurrency,
+  getMultichainIsEvm,
+  getMultichainShouldShowFiat,
+  getMultichainCurrencyImage,
+} from '../../../selectors/multichain';
 import { useCurrencyDisplay } from '../../../hooks/useCurrencyDisplay';
 import { MetaMetricsContext } from '../../../contexts/metametrics';
 import {
@@ -52,13 +52,16 @@ import {
 
 const AssetList = ({ onClickAsset }) => {
   const [showDetectedTokens, setShowDetectedTokens] = useState(false);
+  // TODO: Use balance from our new non-EVM balance controller
   const selectedAccountBalance = useSelector(getSelectedAccountCachedBalance);
-  const nativeCurrency = useSelector(getNativeCurrency);
-  const showFiat = useSelector(getShouldShowFiat);
-  const { chainId } = useSelector(getCurrentNetwork);
+  const nativeCurrency = useSelector(getMultichainNativeCurrency);
+  const showFiat = useSelector(getMultichainShouldShowFiat);
+  // TODO: Check non-EVM networks mainnet here too
   const isMainnet = useSelector(getIsMainnet);
   const { useNativeCurrencyAsPrimaryCurrency } = useSelector(getPreferences);
-  const { ticker, type, rpcUrl } = useSelector(getProviderConfig);
+  const { chainId, ticker, type, rpcUrl } = useSelector(
+    getMultichainCurrentNetwork,
+  );
   const isOriginalNativeSymbol = useIsOriginalNativeTokenSymbol(
     chainId,
     ticker,
@@ -94,7 +97,7 @@ const AssetList = ({ onClickAsset }) => {
       currency: secondaryCurrency,
     });
 
-  const primaryTokenImage = useSelector(getNativeCurrencyImage);
+  const primaryTokenImage = useSelector(getMultichainCurrencyImage);
   const detectedTokens = useSelector(getDetectedTokensInCurrentNetwork) || [];
   const isTokenDetectionInactiveOnNonMainnetSupportedNetwork = useSelector(
     getIstokenDetectionInactiveOnNonMainnetSupportedNetwork,
@@ -112,7 +115,9 @@ const AssetList = ({ onClickAsset }) => {
   const shouldShowBuy = isBuyableChain && balanceIsZero;
   ///: END:ONLY_INCLUDE_IF
 
-  let isStakeable = isMainnet;
+  const isEvm = useSelector(getMultichainIsEvm);
+
+  let isStakeable = isMainnet && isEvm;
   ///: BEGIN:ONLY_INCLUDE_IF(build-mmi)
   isStakeable = false;
   ///: END:ONLY_INCLUDE_IF

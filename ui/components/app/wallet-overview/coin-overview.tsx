@@ -1,21 +1,8 @@
 import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import classnames from 'classnames';
-import {
-  useHistory,
-  ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
-  useLocation,
-  ///: END:ONLY_INCLUDE_IF
-} from 'react-router-dom';
 
-import { toHex } from '@metamask/controller-utils';
-import { CaipChainId, isCaipChainId } from '@metamask/utils';
-///: BEGIN:ONLY_INCLUDE_IF(build-mmi)
-import {
-  getMmiPortfolioEnabled,
-  getMmiPortfolioUrl,
-} from '../../../selectors/institutional/selectors';
-///: END:ONLY_INCLUDE_IF
+import { CaipChainId } from '@metamask/utils';
 import { I18nContext } from '../../../contexts/i18n';
 import Tooltip from '../../ui/tooltip';
 import UserPreferencedCurrencyDisplay from '../user-preferenced-currency-display';
@@ -31,7 +18,6 @@ import Spinner from '../../ui/spinner';
 import { useIsOriginalNativeTokenSymbol } from '../../../hooks/useIsOriginalNativeTokenSymbol';
 import { getProviderConfig } from '../../../ducks/metamask/metamask';
 import { showPrimaryCurrency } from '../../../../shared/modules/currency-display.utils';
-import { ChainId } from '../../../../shared/constants/network';
 import WalletOverview from './wallet-overview';
 import CoinButtons from './coin-buttons';
 
