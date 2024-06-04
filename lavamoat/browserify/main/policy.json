@@ -1825,8 +1825,7 @@
     },
     "@metamask/permission-controller": {
       "globals": {
-        "console.error": true,
-        "console.log": true
+        "console.error": true
       },
       "packages": {
         "@metamask/controller-utils": true,
