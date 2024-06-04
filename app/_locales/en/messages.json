@@ -3916,9 +3916,6 @@
   "permitSimulationDetailInfo": {
     "message": "This transaction gives permission to withdraw your tokens"
   },
-  "permitSimulationSpendingCap": {
-    "message": "Spending cap"
-  },
   "personalAddressDetected": {
     "message": "Personal address detected. Input the token contract address."
   },
