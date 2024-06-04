@@ -12,7 +12,7 @@ import { currentConfirmationSelector } from '../../../../../selectors';
 import useAlerts from '../../../../../hooks/useAlerts';
 import { getHighestSeverity } from '../../../../../components/app/alert-system/utils';
 import GeneralAlert from '../../../../../components/app/alert-system/general-alert/general-alert';
-import { SignatureRequestType } from '../../../types/confirm';
+import { Confirmation, SignatureRequestType } from '../../../types/confirm';
 import { isPermitSignatureRequest } from '../../../utils';
 
 function ConfirmBannerAlert({ ownerId }: { ownerId: string }) {
@@ -50,50 +50,59 @@ function ConfirmBannerAlert({ ownerId }: { ownerId: string }) {
   );
 }
 
+type IntlFunction = (str: string) => string;
+
+const getTitle = (confirmation: Confirmation, t: IntlFunction) => {
+  switch (confirmation.type) {
+    case TransactionType.personalSign:
+      return t('confirmTitleSignature');
+    case TransactionType.signTypedData:
+      return isPermitSignatureRequest(confirmation as SignatureRequestType)
+        ? t('confirmTitlePermitSignature')
+        : t('confirmTitleSignature');
+    case TransactionType.contractInteraction:
+      return t('confirmTitleTransaction');
+    default:
+      return '';
+  }
+};
+
+const getDescription = (confirmation: Confirmation, t: IntlFunction) => {
+  switch (confirmation.type) {
+    case TransactionType.personalSign:
+      return t('confirmTitleDescSignature');
+    case TransactionType.signTypedData:
+      return isPermitSignatureRequest(confirmation as SignatureRequestType)
+        ? t('confirmTitleDescPermitSignature')
+        : t('confirmTitleDescSignature');
+    case TransactionType.contractInteraction:
+      return t('confirmTitleDescContractInteractionTransaction');
+    default:
+      return '';
+  }
+};
+
 const ConfirmTitle: React.FC = memo(() => {
   const t = useI18nContext();
   const currentConfirmation = useSelector(currentConfirmationSelector);
 
-  const typeToTitleTKey: Partial<Record<TransactionType, string>> = useMemo(
-    () => ({
-      [TransactionType.personalSign]: t('confirmTitleSignature'),
-      [TransactionType.signTypedData]: isPermitSignatureRequest(
-        currentConfirmation as SignatureRequestType,
-      )
-        ? t('confirmTitlePermitSignature')
-        : t('confirmTitleSignature'),
-      [TransactionType.contractInteraction]: t('confirmTitleTransaction'),
-    }),
-    [currentConfirmation],
-  );
+  const title = useMemo(() => {
+    if (!currentConfirmation) {
+      return '';
+    }
+    return getTitle(currentConfirmation, t as IntlFunction);
+  }, [currentConfirmation]);
 
-  const typeToDescTKey: Partial<Record<TransactionType, string>> = useMemo(
-    () => ({
-      [TransactionType.personalSign]: t('confirmTitleDescSignature'),
-      [TransactionType.signTypedData]: isPermitSignatureRequest(
-        currentConfirmation as SignatureRequestType,
-      )
-        ? t('confirmTitleDescPermitSignature')
-        : t('confirmTitleDescSignature'),
-      [TransactionType.contractInteraction]: t(
-        'confirmTitleDescContractInteractionTransaction',
-      ),
-    }),
-    [currentConfirmation],
-  );
+  const description = useMemo(() => {
+    if (!currentConfirmation) {
+      return;
+    }
+    getDescription(currentConfirmation, t as IntlFunction);
+  }, [currentConfirmation]);
 
   if (!currentConfirmation) {
     return null;
   }
-
-  const title =
-    typeToTitleTKey[
-      currentConfirmation.type || TransactionType.contractInteraction
-    ];
-  const description =
-    typeToDescTKey[
-      currentConfirmation.type || TransactionType.contractInteraction
-    ];
 
   return (
     <>
