@@ -38,18 +38,18 @@ const TypedSignInfo: React.FC = () => {
     domain: { verifyingContract },
   } = parseTypedDataMessage(currentConfirmation.msgParams.data as string);
 
-  const isPermitSigReq = isPermitSignatureRequest(currentConfirmation);
+  const isPermit = isPermitSignatureRequest(currentConfirmation);
 
   return (
     <>
-      {isPermitSigReq && <PermitSimulation />}
+      {isPermit && <PermitSimulation />}
       <Box
         backgroundColor={BackgroundColor.backgroundDefault}
         borderRadius={BorderRadius.MD}
         marginBottom={4}
         padding={0}
       >
-        {isPermitSigReq && (
+        {isPermit && (
           <>
             <Box padding={2}>
               <ConfirmInfoRow label={t('spender')}>
