@@ -21,7 +21,7 @@ import {
   parseTypedDataMessage,
 } from '../../../../utils';
 import { ConfirmInfoRowTypedSignData } from '../../row/typed-sign-data/typedSignData';
-import PermitSimulation from './permit-simulation';
+import { PermitSimulation } from './permit-simulation';
 
 const TypedSignInfo: React.FC = () => {
   const t = useI18nContext();
@@ -34,8 +34,9 @@ const TypedSignInfo: React.FC = () => {
   }
 
   const {
-    domain,
     domain: { verifyingContract },
+    primaryType,
+    message: { spender },
   } = parseTypedDataMessage(currentConfirmation.msgParams.data as string);
 
   const isPermit = isPermitSignatureRequest(currentConfirmation);
@@ -53,7 +54,7 @@ const TypedSignInfo: React.FC = () => {
           <>
             <Box padding={2}>
               <ConfirmInfoRow label={t('spender')}>
-                <ConfirmInfoRowAddress address={verifyingContract} />
+                <ConfirmInfoRowAddress address={spender} />
               </ConfirmInfoRow>
             </Box>
             <ConfirmInfoRowDivider />
@@ -67,10 +68,10 @@ const TypedSignInfo: React.FC = () => {
             <ConfirmInfoRowUrl url={currentConfirmation.msgParams.origin} />
           </ConfirmInfoRow>
         </Box>
-        {isValidAddress(domain.verifyingContract) && (
+        {isValidAddress(verifyingContract) && (
           <Box padding={2}>
             <ConfirmInfoRow label={t('interactingWith')}>
-              <ConfirmInfoRowAddress address={domain.verifyingContract} />
+              <ConfirmInfoRowAddress address={verifyingContract} />
             </ConfirmInfoRow>
           </Box>
         )}
