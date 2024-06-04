@@ -35,7 +35,6 @@ const TypedSignInfo: React.FC = () => {
 
   const {
     domain: { verifyingContract },
-    primaryType,
     message: { spender },
   } = parseTypedDataMessage(currentConfirmation.msgParams.data as string);
 
