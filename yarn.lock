@@ -4518,14 +4518,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/accounts-controller@npm:@metamask-previews/accounts-controller@16.0.0-preview-8e708969":
-  version: 16.0.0-preview-8e708969
-  resolution: "@metamask-previews/accounts-controller@npm:16.0.0-preview-8e708969"
+"@metamask/accounts-controller@npm:@metamask-previews/accounts-controller@16.0.0-preview-e2529f0":
+  version: 16.0.0-preview-e2529f0
+  resolution: "@metamask-previews/accounts-controller@npm:16.0.0-preview-e2529f0"
   dependencies:
     "@ethereumjs/util": "npm:^8.1.0"
     "@metamask/base-controller": "npm:^6.0.0"
     "@metamask/eth-snap-keyring": "npm:^4.1.1"
-    "@metamask/keyring-api": "npm:^6.1.1"
+    "@metamask/keyring-api": "npm:^6.4.0"
     "@metamask/snaps-sdk": "npm:^4.2.0"
     "@metamask/snaps-utils": "npm:^7.4.0"
     "@metamask/utils": "npm:^8.3.0"
@@ -4536,7 +4536,7 @@ __metadata:
   peerDependencies:
     "@metamask/keyring-controller": ^17.0.0
     "@metamask/snaps-controllers": ^8.1.1
-  checksum: 3f8954e2da1c202b6f0e42e5052a1de26ad92c7e418a8224722890e2ea7af347ad1aec1e2368896db0477ab9a5456043c75606134c5b8ca121b63f10f000f4c1
+  checksum: e3aa69b1cf8879627f39fc75c272d83c468b4b8ce5e5d73f841a095f8f3bffda68f7478421ffe5ac9e6515e8d57625242df4d24c50f7dc0d4ae97fc55379ca71
   languageName: node
   linkType: hard
 
@@ -5461,6 +5461,22 @@ __metadata:
   peerDependencies:
     "@metamask/providers": ">=15 <17"
   checksum: a1fc89907f462dcfdf6d9ed63953f73d98f5b1b3277754b77ca3a1787ba4b422e2b251949cdda26f2b7b0840ba482f1a1a42f0543bbc130e4077b949ba9db8ee
+  languageName: node
+  linkType: hard
+
+"@metamask/keyring-api@npm:^6.4.0":
+  version: 6.4.0
+  resolution: "@metamask/keyring-api@npm:6.4.0"
+  dependencies:
+    "@metamask/snaps-sdk": "npm:^4.2.0"
+    "@metamask/utils": "npm:^8.4.0"
+    "@types/uuid": "npm:^9.0.8"
+    bech32: "npm:^2.0.0"
+    superstruct: "npm:^1.0.3"
+    uuid: "npm:^9.0.1"
+  peerDependencies:
+    "@metamask/providers": ">=15 <18"
+  checksum: 19cfc14b9dcc9ff26dfc5fd0ab935acfcf0464e52bc6bdfe566264fcf36b309b8f189ebe3a7bb3599c408b1fe715db2fdbedb187d2a1a09afa39b582da503baa
   languageName: node
   linkType: hard
 
@@ -10480,6 +10496,13 @@ __metadata:
   version: 9.0.2
   resolution: "@types/uuid@npm:9.0.2"
   checksum: 1754bcf3444e1e3aeadd6e774fc328eb53bc956665e2e8fb6ec127aa8e1f43d9a224c3d22a9a6233dca8dd81a12dc7fed4d84b8876dd5ec82d40f574f7ff8b68
+  languageName: node
+  linkType: hard
+
+"@types/uuid@npm:^9.0.8":
+  version: 9.0.8
+  resolution: "@types/uuid@npm:9.0.8"
+  checksum: b8c60b7ba8250356b5088302583d1704a4e1a13558d143c549c408bf8920535602ffc12394ede77f8a8083511b023704bc66d1345792714002bfa261b17c5275
   languageName: node
   linkType: hard
 
@@ -25032,7 +25055,7 @@ __metadata:
     "@metamask-institutional/sdk": "npm:^0.1.26"
     "@metamask-institutional/transaction-update": "npm:^0.2.2"
     "@metamask/abi-utils": "npm:^2.0.2"
-    "@metamask/accounts-controller": "npm:@metamask-previews/accounts-controller@16.0.0-preview-8e708969"
+    "@metamask/accounts-controller": "npm:@metamask-previews/accounts-controller@16.0.0-preview-e2529f0"
     "@metamask/address-book-controller": "npm:^4.0.1"
     "@metamask/announcement-controller": "npm:^6.1.0"
     "@metamask/approval-controller": "npm:^6.0.1"

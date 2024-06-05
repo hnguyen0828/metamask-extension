@@ -927,12 +927,23 @@
       },
       "packages": {
         "@ethereumjs/tx": true,
+        "@metamask/accounts-controller>@metamask/eth-snap-keyring>@metamask/keyring-api": true,
         "@metamask/accounts-controller>@metamask/eth-snap-keyring>uuid": true,
-        "@metamask/accounts-controller>@metamask/keyring-api": true,
         "@metamask/eth-sig-util": true,
         "@metamask/utils": true,
         "superstruct": true,
         "webpack>events": true
+      }
+    },
+    "@metamask/accounts-controller>@metamask/eth-snap-keyring>@metamask/keyring-api": {
+      "globals": {
+        "URL": true
+      },
+      "packages": {
+        "@metamask/accounts-controller>@metamask/eth-snap-keyring>uuid": true,
+        "@metamask/keyring-api>bech32": true,
+        "@metamask/utils": true,
+        "superstruct": true
       }
     },
     "@metamask/accounts-controller>@metamask/eth-snap-keyring>uuid": {
