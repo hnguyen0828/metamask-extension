@@ -95,9 +95,9 @@ const ConfirmTitle: React.FC = memo(() => {
 
   const description = useMemo(() => {
     if (!currentConfirmation) {
-      return;
+      return '';
     }
-    getDescription(currentConfirmation, t as IntlFunction);
+    return getDescription(currentConfirmation, t as IntlFunction);
   }, [currentConfirmation]);
 
   if (!currentConfirmation) {
