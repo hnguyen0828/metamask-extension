@@ -196,7 +196,7 @@ const EthOverview = ({ className, showAddress }) => {
   const { openBuyCryptoInPdapp } = useRamps();
   ///: END:ONLY_INCLUDE_IF
 
-  useBridging();
+  const { openBridgeExperience } = useBridging();
 
   return (
     <WalletOverview
@@ -383,28 +383,11 @@ const EthOverview = ({ className, showAddress }) => {
               }
               label={t('bridge')}
               onClick={() => {
-                if (isBridgeChain) {
-                  const portfolioUrl = getPortfolioUrl(
-                    'bridge',
-                    'ext_bridge_button',
-                    metaMetricsId,
-                  );
-                  global.platform.openTab({
-                    url: `${portfolioUrl}${
-                      location.pathname.includes('asset') ? '&token=native' : ''
-                    }`,
-                  });
-                  trackEvent({
-                    category: MetaMetricsEventCategory.Navigation,
-                    event: MetaMetricsEventName.BridgeLinkClicked,
-                    properties: {
-                      location: 'Home',
-                      text: 'Bridge',
-                      chain_id: chainId,
-                      token_symbol: 'ETH',
-                    },
-                  });
-                }
+                openBridgeExperience(
+                  'Home',
+                  defaultSwapsToken,
+                  location.pathname.includes('asset') ? '&token=native' : '',
+                );
               }}
               tooltipRender={(contents) =>
                 generateTooltip('bridgeButton', contents)
