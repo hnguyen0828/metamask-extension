@@ -51,6 +51,7 @@ async function withFixtures(options, testSuite) {
     useBundler,
     usePaymaster,
     ethConversionInUsd,
+    waitUntilExtensionIsFullyStarted = false,
   } = options;
 
   const fixtureServer = new FixtureServer();
@@ -176,6 +177,17 @@ async function withFixtures(options, testSuite) {
 
     console.log(`\nExecuting testcase: '${title}'\n`);
 
+    if (waitUntilExtensionIsFullyStarted) {
+      if (
+        process.env.ENABLE_MV3 === 'true' ||
+        process.env.ENABLE_MV3 === undefined
+      ) {
+        await driver.navigate(PAGES.OFFSCREEN);
+      } else {
+        await driver.navigate(PAGES.BACKGROUND);
+      }
+    }
+
     await testSuite({
       driver: driverProxy ?? driver,
       contractRegistry,
@@ -262,47 +274,51 @@ async function withFixtures(options, testSuite) {
     throw error;
   } finally {
     if (!failed || process.env.E2E_LEAVE_RUNNING !== 'true') {
-      await fixtureServer.stop();
-      await ganacheServer.quit();
+      const shutdownPromises = [];
+      shutdownPromises.push(fixtureServer.stop());
+      shutdownPromises.push(ganacheServer.quit());
 
       if (ganacheOptions?.concurrent) {
         secondaryGanacheServer.forEach(async (server) => {
-          await server.quit();
+          shutdownPromises.push(server.quit());
         });
       }
 
       if (useBundler) {
-        await bundlerServer.stop();
+        shutdownPromises.push(bundlerServer.stop());
       }
 
       if (webDriver) {
-        await driver.quit();
+        shutdownPromises.push(driver.quit());
       }
       if (dapp) {
         for (let i = 0; i < numberOfDapps; i++) {
           if (dappServer[i] && dappServer[i].listening) {
-            await new Promise((resolve, reject) => {
-              dappServer[i].close((error) => {
-                if (error) {
-                  return reject(error);
-                }
-                return resolve();
-              });
-            });
+            shutdownPromises.push(
+              new Promise((resolve, reject) => {
+                dappServer[i].close((error) => {
+                  if (error) {
+                    return reject(error);
+                  }
+                  return resolve();
+                });
+              }),
+            );
           }
         }
       }
       if (phishingPageServer.isRunning()) {
-        await phishingPageServer.quit();
+        shutdownPromises.push(phishingPageServer.quit());
       }
 
       // Since mockServer could be stop'd at another location,
       // use a try/catch to avoid an error
-      try {
-        await mockServer.stop();
-      } catch (e) {
-        console.log('mockServer already stopped');
-      }
+      shutdownPromises.push(
+        mockServer.stop().catch(() => {
+          console.log('mockServer already stopped');
+        }),
+      );
+      await Promise.all(shutdownPromises);
     }
   }
 }
