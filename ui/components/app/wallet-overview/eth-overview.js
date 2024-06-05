@@ -68,6 +68,7 @@ import { getPortfolioUrl } from '../../../helpers/utils/portfolio';
 import { useIsOriginalNativeTokenSymbol } from '../../../hooks/useIsOriginalNativeTokenSymbol';
 import { getProviderConfig } from '../../../ducks/metamask/metamask';
 import { showPrimaryCurrency } from '../../../../shared/modules/currency-display.utils';
+import useBridging from '../../../hooks/experiences/useBridging';
 import WalletOverview from './wallet-overview';
 
 const EthOverview = ({ className, showAddress }) => {
@@ -194,6 +195,8 @@ const EthOverview = ({ className, showAddress }) => {
   ///: BEGIN:ONLY_INCLUDE_IF(build-main,build-beta,build-flask)
   const { openBuyCryptoInPdapp } = useRamps();
   ///: END:ONLY_INCLUDE_IF
+
+  useBridging();
 
   return (
     <WalletOverview

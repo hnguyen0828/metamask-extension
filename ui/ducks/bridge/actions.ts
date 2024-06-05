@@ -5,6 +5,4 @@ import { bridgeSlice } from './bridge';
 
 const {} = swapsSlice.actions;
 
-const {} = bridgeSlice.actions;
-
-export {};
+export const {} = bridgeSlice.actions;
