@@ -1,7 +1,7 @@
 import { isEvmAccountType } from '@metamask/keyring-api';
 import { JsonRpcMiddleware } from 'json-rpc-engine';
 import log from 'loglevel';
-import { RestrictedMethods } from '../../../shared/constants/permissions';
+import { RestrictedEthMethods } from '../../../shared/constants/permissions';
 import { UnrestrictedEthSigningMethods } from '../controllers/permissions';
 
 /**
@@ -30,7 +30,7 @@ export default function createEvmMethodsToNonEvmAccountReqFilterMiddleware({
     }
 
     const ethMethodsRequiringEthAccount = [
-      ...Object.values(RestrictedMethods),
+      ...Object.values(RestrictedEthMethods),
       ...UnrestrictedEthSigningMethods,
     ].includes(req.method);
 
@@ -43,24 +43,26 @@ export default function createEvmMethodsToNonEvmAccountReqFilterMiddleware({
     const isWalletRequestPermission =
       req.method === 'wallet_requestPermissions';
 
-    const permissionMethodRequest = (
-      (req?.params as Array<{ [key: string]: {} }>) || []
-    ).map((request) => Object.keys(request)[0]);
+    if (Array.isArray(req?.params)) {
+      const permissionMethodRequest = (
+        (req?.params as Array<{ [key: string]: {} }>) ?? []
+      ).map((request) => Object.keys(request)[0]);
 
-    const isEvmPermissionRequest = [...Object.values(RestrictedMethods)].some(
-      (method) => permissionMethodRequest.includes(method),
-    );
+      const isEvmPermissionRequest = [
+        ...Object.values(RestrictedEthMethods),
+      ].some((method) => permissionMethodRequest.includes(method));
 
-    if (isWalletRequestPermission && isEvmPermissionRequest) {
-      log.debug(
-        "Non evm account can't request this method",
-        permissionMethodRequest,
-      );
-      return end(
-        new Error(
-          `Non evm account can't request this method: ${permissionMethodRequest.toString()}`,
-        ),
-      );
+      if (isWalletRequestPermission && isEvmPermissionRequest) {
+        log.debug(
+          "Non evm account can't request this method",
+          permissionMethodRequest,
+        );
+        return end(
+          new Error(
+            `Non evm account can't request this method: ${permissionMethodRequest.toString()}`,
+          ),
+        );
+      }
     }
 
     return next();
