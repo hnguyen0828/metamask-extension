@@ -12,11 +12,11 @@ import { RedesignedGasFees } from '../shared/redesigned-gas-fees/redesigned-gas-
 import { TransactionDetails } from '../shared/transaction-details/transaction-details';
 
 const ContractInteractionInfo: React.FC = () => {
-  const currentConfirmation = useSelector(
+  const transactionMeta = useSelector(
     currentConfirmationSelector,
   ) as TransactionMeta;
 
-  if (!currentConfirmation?.txParams) {
+  if (!transactionMeta?.txParams) {
     return null;
   }
 
@@ -28,8 +28,8 @@ const ContractInteractionInfo: React.FC = () => {
         marginBottom={4}
       >
         <SimulationDetails
-          simulationData={currentConfirmation.simulationData}
-          transactionId={currentConfirmation.id}
+          simulationData={transactionMeta.simulationData}
+          transactionId={transactionMeta.id}
           isTransactionsRedesign
         />
       </Box>
@@ -47,7 +47,7 @@ const ContractInteractionInfo: React.FC = () => {
         padding={2}
         marginBottom={4}
       >
-        <RedesignedGasFees />
+        <RedesignedGasFees transactionMeta={transactionMeta} />
       </Box>
     </>
   );
