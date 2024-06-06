@@ -3,6 +3,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { EthAccountType, EthMethod } from '@metamask/keyring-api';
+import nock from 'nock';
 import {
   CHAIN_IDS,
   GOERLI_DISPLAY_NAME,
@@ -13,6 +14,8 @@ import { renderWithProvider } from '../../../../test/jest/rendering';
 import { KeyringType } from '../../../../shared/constants/keyring';
 import { useIsOriginalNativeTokenSymbol } from '../../../hooks/useIsOriginalNativeTokenSymbol';
 import { ETH_EOA_METHODS } from '../../../../shared/constants/eth-methods';
+import { BRIDGE_API_BASE_URL } from '../../../../shared/constants/bridge';
+import { setBackgroundConnection } from '../../../store/background-connection';
 import EthOverview from './eth-overview';
 
 // Mock BUYABLE_CHAINS_MAP
@@ -39,6 +42,10 @@ jest.mock('../../../hooks/useIsOriginalNativeTokenSymbol', () => {
 });
 
 let openTabSpy;
+
+setBackgroundConnection({
+  setBridgeFeatureFlags: jest.fn(),
+});
 
 describe('EthOverview', () => {
   useIsOriginalNativeTokenSymbol.mockReturnValue(true);
@@ -156,6 +163,10 @@ describe('EthOverview', () => {
     });
 
     beforeEach(() => {
+      nock(BRIDGE_API_BASE_URL)
+        .get('/getAllFeatureFlags')
+        .reply(200, { 'extension-support': false });
+
       openTabSpy.mockClear();
     });
 

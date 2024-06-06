@@ -1,12 +1,16 @@
 import { ObservableStore } from '@metamask/obs-store';
+import { BridgeFlag } from '../../../ui/pages/bridge/types/metabridge';
 
+// TODO move this to api types file
 export type BridgeFeatureFlags = {
-  'extension-support': boolean;
+  [BridgeFlag.EXTENSION_SUPPORT]: boolean;
 };
 
 const initialState = {
   bridgeState: {
-    bridgeFeatureFlags: {},
+    bridgeFeatureFlags: {
+      [BridgeFlag.EXTENSION_SUPPORT]: false,
+    },
   },
 };
 

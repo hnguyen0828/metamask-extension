@@ -3,10 +3,13 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { EthAccountType } from '@metamask/keyring-api';
+import nock from 'nock';
 import { CHAIN_IDS } from '../../../../shared/constants/network';
 import { renderWithProvider } from '../../../../test/jest/rendering';
 import { KeyringType } from '../../../../shared/constants/keyring';
 import { ETH_EOA_METHODS } from '../../../../shared/constants/eth-methods';
+import { setBackgroundConnection } from '../../../store/background-connection';
+import { BRIDGE_API_BASE_URL } from '../../../../shared/constants/bridge';
 import TokenOverview from './token-overview';
 
 // Mock BUYABLE_CHAINS_MAP
@@ -26,6 +29,11 @@ jest.mock('../../../../shared/constants/network', () => ({
   },
 }));
 let openTabSpy;
+
+setBackgroundConnection({
+  setBridgeFeatureFlags: jest.fn(),
+  getTokenSymbol: jest.fn(),
+});
 
 describe('TokenOverview', () => {
   const mockStore = {
@@ -72,6 +80,9 @@ describe('TokenOverview', () => {
         },
         url: 'https://metamask-institutional.io',
       },
+      bridgeState: {
+        bridgeFeatureFlags: { 'extension-support': false },
+      },
     },
   };
 
@@ -93,6 +104,9 @@ describe('TokenOverview', () => {
     });
 
     beforeEach(() => {
+      nock(BRIDGE_API_BASE_URL)
+        .get('/getAllFeatureFlags')
+        .reply(200, { 'extension-support': false });
       openTabSpy.mockClear();
     });
 

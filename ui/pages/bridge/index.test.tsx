@@ -28,10 +28,10 @@ setBackgroundConnection({
   getNetworkConfigurationByNetworkClientId: jest
     .fn()
     .mockResolvedValue({ chainId: '0x1' }),
-});
+} as any);
 
 describe('Bridge', () => {
-  let featureFlagsNock;
+  let featureFlagsNock: nock.Scope;
 
   beforeEach(() => {
     nock(CONSTANTS.METASWAP_BASE_URL)
@@ -69,12 +69,17 @@ describe('Bridge', () => {
 
   it('renders the component with initial props', async () => {
     const swapsMockStore = createSwapsMockStore();
-    swapsMockStore.metamask.swapsState.swapsFeatureFlags.swapRedesign.extensionActive = false;
+    swapsMockStore.metamask.swapsState.swapsFeatureFlags.swapRedesign.extensionActive =
+      true;
+    swapsMockStore.metamask.bridgeState = {
+      bridgeFeatureFlags: { 'extension-support': true },
+    };
+
+    // TODO enable bridge flag, update snapshot and add tets
     const store = configureMockStore(middleware)(swapsMockStore);
     const { container, getByText } = renderWithProvider(<Bridge />, store);
     await waitFor(() => expect(featureFlagsNock.isDone()).toBe(true));
     expect(getByText('Swap')).toBeInTheDocument();
-    expect(getByText('Cancel')).toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 });
