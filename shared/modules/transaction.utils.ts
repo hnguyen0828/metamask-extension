@@ -14,12 +14,7 @@ import {
 } from '@metamask/transaction-controller';
 import type { TransactionParams } from '@metamask/transaction-controller';
 
-import { SignatureRequestType } from '../../ui/pages/confirmations/types/confirm';
-import {
-  AssetType,
-  EIP712_PRIMARY_TYPE_PERMIT,
-  TokenStandard,
-} from '../constants/transaction';
+import { AssetType, TokenStandard } from '../constants/transaction';
 import { readAddressAsContract } from './contract-utils';
 import { isEqualCaseInsensitive } from './string-utils';
 
