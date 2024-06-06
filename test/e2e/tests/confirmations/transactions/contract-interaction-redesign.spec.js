@@ -81,6 +81,8 @@ describe('Confirmation Redesign Contract Interaction Component', function () {
       },
       async ({ driver }) => {
         await unlockWallet(driver);
+
+        await openAdvancedDetailsAndCheckTheyExist(driver);
       },
     );
   });
@@ -90,7 +92,7 @@ async function deployContract(driver) {
   await driver.switchToWindowWithTitle(WINDOW_TITLES.TestDApp);
   await driver.clickElement(`#deployButton`);
 
-  await driver.delay(1000);
+  await driver.delay(2000);
   await driver.switchToWindowWithTitle(WINDOW_TITLES.Dialog);
 
   await driver.waitForSelector({
@@ -111,11 +113,19 @@ async function initiateContractInteractionTx(driver) {
   await driver.switchToWindowWithTitle(WINDOW_TITLES.TestDApp);
   await driver.clickElement(`#depositButton`);
 
-  await driver.delay(1000);
+  await driver.delay(2000);
   await driver.switchToWindowWithTitle(WINDOW_TITLES.Dialog);
 
   await driver.waitForSelector({
     css: 'h2',
     text: 'Transaction request',
   });
+}
+
+async function openAdvancedDetailsAndCheckTheyExist(driver) {
+  await driver.waitForSelector({ css: 'p', text: 'Fee details' });
+  await driver.clickElement({ css: 'p', text: 'Fee details' });
+
+  await driver.waitForSelector({ css: 'p', text: 'L2 Fees' });
+  await driver.waitForSelector({ css: 'p', text: 'L1 Fees' });
 }
