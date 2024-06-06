@@ -3444,6 +3444,7 @@
   "onboardingMetametricsDescriptionLegacy": {
     "message": "MetaMask would like to gather usage data to better understand how our users interact with MetaMask. This data will be used to provide the service, which includes improving the service based on your use."
   },
+
   "onboardingMetametricsDisagree": {
     "message": "No thanks"
   },
@@ -4591,6 +4592,7 @@
   "sendSwapSubmissionWarning": {
     "message": "Clicking this button will immediately initiate your swap transaction. Please review your transaction details before proceeding."
   },
+
   "sendTo": {
     "message": "Send to"
   },
