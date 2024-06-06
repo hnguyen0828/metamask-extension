@@ -316,8 +316,6 @@ export default function createRPCMethodTrackingMiddleware({
               ];
             }
           }
-
-          console.log('request = ', req);
         } catch (e) {
           console.warn(`createRPCMethodTrackingMiddleware: Errored - ${e}`);
         }
