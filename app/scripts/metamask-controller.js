@@ -306,6 +306,8 @@ import {
   PermissionNames,
   unrestrictedMethods,
 } from './controllers/permissions';
+import { MetaMetricsDataDeletionController } from './controllers/metametrics-data-deletion/metametrics-data-deletion';
+import { DataDeletionService } from './services/data-deletion-service';
 import createRPCMethodTrackingMiddleware from './lib/createRPCMethodTrackingMiddleware';
 ///: BEGIN:ONLY_INCLUDE_IF(blockaid)
 import { IndexedDBPPOMStorage } from './lib/ppom/indexed-db-backend';
@@ -330,8 +332,6 @@ import UserStorageController from './controllers/user-storage/user-storage-contr
 import { PushPlatformNotificationsController } from './controllers/push-platform-notifications/push-platform-notifications';
 import { MetamaskNotificationsController } from './controllers/metamask-notifications/metamask-notifications';
 import { updateSecurityAlertResponse } from './lib/ppom/ppom-util';
-import MetaMetricsDataDeletionController from './controllers/metametrics-data-deletion/metametrics-data-deletion';
-import { DataDeletionService } from './services/data-deletion-service';
 
 export const METAMASK_CONTROLLER_EVENTS = {
   // Fired after state changes that impact the extension badge (unapproved msg count)
