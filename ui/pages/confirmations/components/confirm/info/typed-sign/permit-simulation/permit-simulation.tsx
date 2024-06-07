@@ -26,7 +26,7 @@ const PermitSimulation: React.FC = () => {
   const currentConfirmation = useSelector(
     currentConfirmationSelector,
   ) as SignatureRequestType;
-  const [faitValue, setFiatValue] = useState<number>();
+  const [fiatValue, setFiatValue] = useState<number>();
 
   const {
     domain: { verifyingContract },
@@ -57,7 +57,7 @@ const PermitSimulation: React.FC = () => {
       <ConfirmInfoRow label={t('approve')}>
         <Box>
           <Box display={Display.Flex}>
-            <Box display={Display.Inline} marginRight={1}>
+            <Box display={Display.Inline} marginInlineEnd={1}>
               <Text
                 backgroundColor={BackgroundColor.backgroundAlternative}
                 borderRadius={BorderRadius.XL}
@@ -70,7 +70,7 @@ const PermitSimulation: React.FC = () => {
             <Name value={verifyingContract} type={NameType.ETHEREUM_ADDRESS} />
           </Box>
           <Box>
-            {faitValue && <IndividualFiatDisplay fiatAmount={faitValue} />}
+            {fiatValue && <IndividualFiatDisplay fiatAmount={fiatValue} />}
           </Box>
         </Box>
       </ConfirmInfoRow>
