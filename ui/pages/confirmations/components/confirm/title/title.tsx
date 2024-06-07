@@ -54,14 +54,14 @@ type IntlFunction = (str: string) => string;
 
 const getTitle = (confirmation: Confirmation, t: IntlFunction) => {
   switch (confirmation.type) {
+    case TransactionType.contractInteraction:
+      return t('confirmTitleTransaction');
     case TransactionType.personalSign:
       return t('confirmTitleSignature');
     case TransactionType.signTypedData:
       return isPermitSignatureRequest(confirmation as SignatureRequestType)
         ? t('confirmTitlePermitSignature')
         : t('confirmTitleSignature');
-    case TransactionType.contractInteraction:
-      return t('confirmTitleTransaction');
     default:
       return '';
   }
@@ -69,14 +69,14 @@ const getTitle = (confirmation: Confirmation, t: IntlFunction) => {
 
 const getDescription = (confirmation: Confirmation, t: IntlFunction) => {
   switch (confirmation.type) {
+    case TransactionType.contractInteraction:
+      return t('confirmTitleDescContractInteractionTransaction');
     case TransactionType.personalSign:
       return t('confirmTitleDescSignature');
     case TransactionType.signTypedData:
       return isPermitSignatureRequest(confirmation as SignatureRequestType)
         ? t('confirmTitleDescPermitSignature')
         : t('confirmTitleDescSignature');
-    case TransactionType.contractInteraction:
-      return t('confirmTitleDescContractInteractionTransaction');
     default:
       return '';
   }
