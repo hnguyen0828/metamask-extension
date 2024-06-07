@@ -52,31 +52,31 @@ function ConfirmBannerAlert({ ownerId }: { ownerId: string }) {
 
 type IntlFunction = (str: string) => string;
 
-const getTitle = (confirmation: Confirmation, t: IntlFunction) => {
-  switch (confirmation.type) {
+const getTitle = (t: IntlFunction, confirmation?: Confirmation) => {
+  switch (confirmation?.type) {
+    case TransactionType.contractInteraction:
+      return t('confirmTitleTransaction');
     case TransactionType.personalSign:
       return t('confirmTitleSignature');
     case TransactionType.signTypedData:
       return isPermitSignatureRequest(confirmation as SignatureRequestType)
         ? t('confirmTitlePermitSignature')
         : t('confirmTitleSignature');
-    case TransactionType.contractInteraction:
-      return t('confirmTitleTransaction');
     default:
       return '';
   }
 };
 
-const getDescription = (confirmation: Confirmation, t: IntlFunction) => {
-  switch (confirmation.type) {
+const getDescription = (t: IntlFunction, confirmation?: Confirmation) => {
+  switch (confirmation?.type) {
+    case TransactionType.contractInteraction:
+      return t('confirmTitleDescContractInteractionTransaction');
     case TransactionType.personalSign:
       return t('confirmTitleDescSignature');
     case TransactionType.signTypedData:
       return isPermitSignatureRequest(confirmation as SignatureRequestType)
         ? t('confirmTitleDescPermitSignature')
         : t('confirmTitleDescSignature');
-    case TransactionType.contractInteraction:
-      return t('confirmTitleDescContractInteractionTransaction');
     default:
       return '';
   }
@@ -86,19 +86,15 @@ const ConfirmTitle: React.FC = memo(() => {
   const t = useI18nContext();
   const currentConfirmation = useSelector(currentConfirmationSelector);
 
-  const title = useMemo(() => {
-    if (!currentConfirmation) {
-      return '';
-    }
-    return getTitle(currentConfirmation, t as IntlFunction);
-  }, [currentConfirmation]);
+  const title = useMemo(
+    () => getTitle(t as IntlFunction, currentConfirmation),
+    [currentConfirmation],
+  );
 
-  const description = useMemo(() => {
-    if (!currentConfirmation) {
-      return '';
-    }
-    return getDescription(currentConfirmation, t as IntlFunction);
-  }, [currentConfirmation]);
+  const description = useMemo(
+    () => getDescription(t as IntlFunction, currentConfirmation),
+    [currentConfirmation],
+  );
 
   if (!currentConfirmation) {
     return null;
