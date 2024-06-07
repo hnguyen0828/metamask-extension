@@ -1835,6 +1835,47 @@ exports[`Security Tab should match snapshot 1`] = `
           </div>
         </div>
       </div>
+      <div
+        class="mm-box settings-page__content-row mm-box--display-flex mm-box--gap-4 mm-box--flex-direction-column"
+        data-testid="delete-metametrics-data-toggle"
+      >
+        <div
+          class="settings-page__content-item"
+        >
+          <span>
+            Delete MetaMetrics data
+          </span>
+          <div
+            class="settings-page__content-description"
+          >
+            <span>
+               
+              You initiated this action on 
+              
+              . This process can take up to 30 days. View the 
+              <a
+                href="https://consensys.io/privacy-policy/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Privacy policy
+              </a>
+              
+               
+            </span>
+          </div>
+        </div>
+        <div
+          class="settings-page__content-item-col"
+        >
+          <button
+            class="mm-box mm-text mm-button-base mm-button-base--size-md mm-button-base--disabled settings-page__button mm-button-primary mm-button-primary--disabled mm-text--body-md-medium mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-4 mm-box--display-inline-flex mm-box--justify-content-center mm-box--align-items-center mm-box--color-primary-inverse mm-box--background-color-primary-default mm-box--rounded-pill"
+            disabled=""
+          >
+            Delete MetaMetrics data
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
