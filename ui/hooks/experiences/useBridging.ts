@@ -42,7 +42,7 @@ const useBridging = () => {
   const keyring = useSelector(getCurrentKeyring);
   const usingHardwareWallet = isHardwareKeyring(keyring.type);
 
-  const isBridgeSupported = useSelector(getIsBridgeEnabled);
+  const isBridgeSupported = useSelector(getIsBridgeEnabled());
   const isBridgeChain = useSelector(getIsBridgeChain);
 
   useEffect(() => {

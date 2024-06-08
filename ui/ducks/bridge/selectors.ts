@@ -5,14 +5,17 @@ import { getBridgeFeatureFlags } from '../../../shared/modules/selectors';
 import { getUseExternalServices } from '../../selectors';
 import { BridgeFlag } from '../../pages/bridge/types/metabridge';
 
-export const getIsBridgeEnabled = createSelector(
-  getBridgeFeatureFlags,
-  getUseExternalServices,
-  (bridgeFeatureFlags, shouldUseExternalServices) => {
-    console.log('====', bridgeFeatureFlags);
-    return (
-      shouldUseExternalServices &&
-      bridgeFeatureFlags?.[BridgeFlag.EXTENSION_SUPPORT]
-    );
-  },
-);
+// TODO revert function?
+export const getIsBridgeEnabled = () =>
+  createSelector(
+    getBridgeFeatureFlags,
+    getUseExternalServices,
+    (bridgeFeatureFlags, shouldUseExternalServices) => {
+      console.log('====', bridgeFeatureFlags);
+      return (
+        (shouldUseExternalServices &&
+          bridgeFeatureFlags?.[BridgeFlag.EXTENSION_SUPPORT]) ??
+        false
+      );
+    },
+  );
