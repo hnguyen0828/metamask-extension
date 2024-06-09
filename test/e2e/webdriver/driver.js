@@ -882,53 +882,51 @@ class Driver {
     { retries = 8, retryDelay = 2500 } = {},
   ) {
     // This is just to test the flow right now
-    // getSocketServer().switchToWindowWithTitle(title);
+    getSocketServer().switchToWindowWithTitle(title);
 
     // This is what will eventually run
-    //
+    // const tabs = await getSocketServer().switchToWindowWithTitle(title);
 
-    const tabs = await getSocketServer().switchToWindowWithTitle(title);
+    // let windowHandles = await this.driver.getAllWindowHandles();
 
-    let windowHandles = await this.driver.getAllWindowHandles();
+    // console.log('tabs', tabs);
+    // console.log('windowHandles', windowHandles);
 
-    console.log('tabs', tabs);
-    console.log('windowHandles', windowHandles);
-
-    // If there's an extra console window, Selenium will report one more window than chrome.tabs.query() will
-    if (tabs.length + 1 === windowHandles.length) {
-      tabs.index++;
-    }
-
-    await this.driver.switchTo().window(windowHandles[tabs.index]);
-
-    // let windowHandles =
-    //   initialWindowHandles || (await this.driver.getAllWindowHandles());
-    // let timeElapsed = 0;
-
-    // while (timeElapsed <= timeout) {
-    //   for (const handle of windowHandles) {
-    //     const handleTitle = await retry(
-    //       {
-    //         retries,
-    //         delay: retryDelay,
-    //       },
-    //       async () => {
-    //         await this.driver.switchTo().window(handle);
-    //         return await this.driver.getTitle();
-    //       },
-    //     );
-
-    //     if (handleTitle === title) {
-    //       return handle;
-    //     }
-    //   }
-    //   await this.delay(delayStep);
-    //   timeElapsed += delayStep;
-    //   // refresh the window handles
-    //   windowHandles = await this.driver.getAllWindowHandles();
+    // // If there's an extra console window, Selenium will report one more window than chrome.tabs.query() will
+    // if (tabs.length + 1 === windowHandles.length) {
+    //   tabs.index++;
     // }
 
-    // throw new Error(`No window with title: ${title}`);
+    // await this.driver.switchTo().window(windowHandles[tabs.index]);
+
+    let windowHandles =
+      initialWindowHandles || (await this.driver.getAllWindowHandles());
+    let timeElapsed = 0;
+
+    while (timeElapsed <= timeout) {
+      for (const handle of windowHandles) {
+        const handleTitle = await retry(
+          {
+            retries,
+            delay: retryDelay,
+          },
+          async () => {
+            await this.driver.switchTo().window(handle);
+            return await this.driver.getTitle();
+          },
+        );
+
+        if (handleTitle === title) {
+          return handle;
+        }
+      }
+      await this.delay(delayStep);
+      timeElapsed += delayStep;
+      // refresh the window handles
+      windowHandles = await this.driver.getAllWindowHandles();
+    }
+
+    throw new Error(`No window with title: ${title}`);
   }
 
   /**
