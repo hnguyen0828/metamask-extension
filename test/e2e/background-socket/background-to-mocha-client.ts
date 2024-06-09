@@ -59,7 +59,11 @@ class BackgroundToMochaClient {
         setTimeout(() => this.findIndexOfTabWithTitle(title), 500);
       } else {
         this.send({ command: 'openTabs', tabs });
-        this.send({ command: 'switchToIndex', index: index });
+        this.send({
+          command: 'switchToIndex',
+          index: index,
+          length: tabs.length,
+        });
       }
     });
   }

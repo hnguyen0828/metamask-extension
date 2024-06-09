@@ -56,6 +56,9 @@ class MochaSocketServer {
       if (msg.command === 'switchToIndex') {
         this.eventEmitter.emit('switchToIndex', msg.index);
       }
+      if (msg.command === 'openTabs') {
+        console.log('openTabsLength', msg.tabs.length);
+      }
     } catch (e) {
       console.log('error in JSON', e);
     }
@@ -71,13 +74,13 @@ class MochaSocketServer {
     this.send({ command: 'switchToWindowWithTitle', title });
 
     console.log('waiting for response');
-    let switchToIndex = await this.waitForResponse();
-    console.log('got the response', switchToIndex);
+    let { switchToIndex, openTabsLength } = await this.waitForResponse();
+    console.log('got the response', switchToIndex, openTabsLength);
 
-    return switchToIndex;
+    return { switchToIndex, openTabsLength };
   }
 
-  waitForResponse() {
+  async waitForResponse() {
     return new Promise((resolve) => {
       this.eventEmitter.on('switchToIndex', resolve);
     });
