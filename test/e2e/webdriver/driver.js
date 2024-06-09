@@ -887,19 +887,19 @@ class Driver {
     // This is what will eventually run
     //
 
-    const { switchToIndex, openTabsLength } =
-      await getSocketServer().switchToWindowWithTitle(title);
+    const tabs = await getSocketServer().switchToWindowWithTitle(title);
 
     let windowHandles = await this.driver.getAllWindowHandles();
 
+    console.log('tabs', tabs);
     console.log('windowHandles', windowHandles);
 
     // If there's an extra console window, Selenium will report one more window than chrome.tabs.query() will
-    if (openTabsLength + 1 === windowHandles.length) {
-      switchToIndex++;
+    if (tabs.length + 1 === windowHandles.length) {
+      tabs.index++;
     }
 
-    await this.driver.switchTo().window(windowHandles[switchToIndex]);
+    await this.driver.switchTo().window(windowHandles[tabs.index]);
 
     // let windowHandles =
     //   initialWindowHandles || (await this.driver.getAllWindowHandles());

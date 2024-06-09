@@ -85,6 +85,7 @@ export async function installSnapSimpleKeyring(
     tag: 'button',
   });
 
+  await driver.delay(500);
   await driver.switchToWindowWithTitle(WINDOW_TITLES.SnapSimpleKeyringDapp);
 
   await driver.waitForSelector({

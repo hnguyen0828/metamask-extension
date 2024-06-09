@@ -1,5 +1,6 @@
-import WebSocket from 'ws';
 import events from 'events';
+import WebSocket from 'ws';
+import { ExtensionResponseTabs } from './types';
 
 let _socketServer: MochaSocketServer | null = null;
 
@@ -54,7 +55,7 @@ class MochaSocketServer {
       const msg = JSON.parse(message);
 
       if (msg.command === 'switchToIndex') {
-        this.eventEmitter.emit('switchToIndex', msg.index);
+        this.eventEmitter.emit('switchToIndex', msg);
       }
       if (msg.command === 'openTabs') {
         console.log('openTabsLength', msg.tabs.length);
@@ -74,14 +75,17 @@ class MochaSocketServer {
     this.send({ command: 'switchToWindowWithTitle', title });
 
     console.log('waiting for response');
-    let { switchToIndex, openTabsLength } = await this.waitForResponse();
-    console.log('got the response', switchToIndex, openTabsLength);
 
-    return { switchToIndex, openTabsLength };
+    let tabs = await this.waitForResponse();
+    console.log('got the response', tabs);
+    // let tabs: ExtensionResponseTabs = await this.waitForResponse();
+    // console.log('got the response', tabs.findIndex, tabs.numTabs);
+
+    return tabs;
   }
 
   async waitForResponse() {
-    return new Promise((resolve) => {
+    return new Promise<ExtensionResponseTabs>((resolve) => {
       this.eventEmitter.on('switchToIndex', resolve);
     });
   }
