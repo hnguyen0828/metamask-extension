@@ -156,7 +156,7 @@
     "completedOnboarding": true,
     "onboardingTabs": "object"
   },
-  "PPOMController": { "storageMetadata": {}, "versionFileETag": "string" },
+  "PPOMController": { "storageMetadata": {} },
   "PermissionController": { "subjects": "object" },
   "PermissionLogController": {
     "permissionHistory": "object",
