@@ -12,7 +12,7 @@ describe('pereference selectors', () => {
     });
 
     it('returns undefined if useTransactionSimulations is not set', () => {
-      const result = getUseTransactionSimulations({metamask: {}});
+      const result = getUseTransactionSimulations({ metamask: {} });
       expect(result).toStrictEqual(undefined);
     });
   });
