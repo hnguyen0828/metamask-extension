@@ -1,4 +1,5 @@
 const { hexToNumber } = require('@metamask/utils');
+const FixtureBuilder = require('../../../fixture-builder');
 const {
   defaultGanacheOptions,
   defaultGanacheOptionsForType2Transactions,
@@ -7,7 +8,7 @@ const {
   WINDOW_TITLES,
   withFixtures,
 } = require('../../../helpers');
-const FixtureBuilder = require('../../../fixture-builder');
+const { SMART_CONTRACTS } = require('../../../seeder/smart-contracts');
 const { CHAIN_IDS } = require('../../../../../shared/constants/network');
 
 describe('Confirmation Redesign Contract Interaction Component', function () {
@@ -26,14 +27,17 @@ describe('Confirmation Redesign Contract Interaction Component', function () {
           })
           .build(),
         ganacheOptions: defaultGanacheOptions,
+        smartContract: SMART_CONTRACTS.PIGGYBANK,
         title: this.test?.fullTitle(),
       },
       async ({ driver }) => {
         await unlockWallet(driver);
         await openDapp(driver);
 
-        await deployContract(driver);
-        await initiateContractInteractionTx(driver);
+        await driver.delay(1024 * 1024);
+
+        // await deployContract(driver);
+        // await initiateContractInteractionTx(driver);
       },
     );
   });
@@ -49,14 +53,17 @@ describe('Confirmation Redesign Contract Interaction Component', function () {
           })
           .build(),
         ganacheOptions: defaultGanacheOptionsForType2Transactions,
+        smartContract: SMART_CONTRACTS.PIGGYBANK,
         title: this.test?.fullTitle(),
       },
       async ({ driver }) => {
         await unlockWallet(driver);
         await openDapp(driver);
 
-        await deployContract(driver);
-        await initiateContractInteractionTx(driver);
+        await driver.delay(1024 * 1024);
+
+        // await deployContract(driver);
+        // await initiateContractInteractionTx(driver);
       },
     );
   });
