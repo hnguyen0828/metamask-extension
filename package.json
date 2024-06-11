@@ -14,7 +14,7 @@
     "start:mmi": "yarn start --build-type mmi",
     "start:lavamoat": "yarn build:dev dev --apply-lavamoat=true",
     "dist": "yarn build dist",
-    "dist:mv2": "ENABLE_MV3=false yarn build dist",
+    "dist:mv2": "ENABLE_MV3=false yarn build dist  --apply-lavamoat=false --snow=false",
     "dist:mmi": "yarn dist --build-type mmi",
     "dist:mmi:debug": "yarn dist --build-type mmi --apply-lavamoat=false --snow=false",
     "build": "yarn lavamoat:build",
