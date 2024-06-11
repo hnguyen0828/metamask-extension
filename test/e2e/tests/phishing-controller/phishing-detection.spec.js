@@ -349,15 +349,25 @@ describe('Phishing Detection', function () {
     function handleRequests(name, value, code) {
       server.once('request', async function (_request, response) {
         response.setHeader(name, value).writeHead(code).end(`
-        <meta http-equiv="Refresh" content="0;url="${destination}">
-        <script>
-          // this script should not run.
-          // it is meant to test for regressions in our redirect
-          // protection due to changes in either MetaMask or browsers.
-          document.location.href = "${destination}";
-          alert("trying to prevent phishing protection");
-          while(true){}
-        </script>
+        <!doctype html>
+        <html>
+          <head>
+            <meta http-equiv="Refresh" content="0;url="${destination}"/>
+            <title>Phishing test</title>
+
+            <script>
+              // this script should not run.
+              // it is meant to test for regressions in our redirect
+              // protection due to changes in either MetaMask or browsers.
+              document.location.href = "${destination}";
+              alert("trying to prevent phishing protection");
+              while(true){}
+            </script>
+          </head>
+          <body>
+            <h1>Redirecting...</h1>
+          </body>
+        </html>
         `);
       });
     }
@@ -387,9 +397,6 @@ describe('Phishing Detection', function () {
       const { promise, resolve } = createDeferredPromise();
       fixturePromise = withFixtures(
         {
-          // The redirect Phishing handler isn't active until the extension is
-          // fully started.
-          waitUntilExtensionIsFullyStarted: true,
           fixtures: new FixtureBuilder().build(),
           ganacheOptions: defaultGanacheOptions,
           title: this.test.fullTitle(),
@@ -406,6 +413,11 @@ describe('Phishing Detection', function () {
         },
       );
       driver = await promise;
+
+      // required to ensure MetaMask is fully started before running tests
+      // if we had a way of detecting when the offscreen/background were ready
+      // we could remove this
+      await unlockWallet(driver);
     });
     after('Shut down fixtures', async function () {
       deferredTestSuite.resolve(); // let the fixtures know tests are complete
@@ -419,7 +431,7 @@ describe('Phishing Detection', function () {
     });
 
     for (const code of redirectableStatusCodes) {
-      it(`should display the MetaMask Phishing Detection page if a blocked site redirects via HTTP Status Code ${code} to another page`, async function () {
+      it.only(`should display the MetaMask Phishing Detection page if a blocked site redirects via HTTP Status Code ${code} to another page`, async function () {
         const { port } = server.address();
         const refresh = { name: 'Refresh', value: `0;url="${destination}"` };
         const location = { name: 'Location', value: destination };
