@@ -162,6 +162,9 @@
   "accountSelectionRequired": {
     "message": "Anda harus memilih satu akun!"
   },
+  "accountTypeNotSupported": {
+    "message": "Jenis akun tidak didukung"
+  },
   "accounts": {
     "message": "Akun"
   },
@@ -311,6 +314,9 @@
   "addingTokens": {
     "message": "Menambahkan token"
   },
+  "additionalNetworks": {
+    "message": "Jaringan tambahan"
+  },
   "address": {
     "message": "Alamat"
   },
@@ -398,12 +404,21 @@
   "allPermissions": {
     "message": "Semua Izin"
   },
+  "allTimeHigh": {
+    "message": "Tertinggi sepanjang waktu"
+  },
+  "allTimeLow": {
+    "message": "Terendah sepanjang waktu"
+  },
   "allYourNFTsOf": {
     "message": "Seluruh NFT Anda dari $1 ",
     "description": "$1 is a link to contract on the block explorer when we're not able to retrieve a erc721 or erc1155 name"
   },
   "allow": {
     "message": "Izinkan"
+  },
+  "allowMetaMaskToDetectTokens": {
+    "message": "Izinkan MetaMask mendeteksi dan menampilkan token dengan autodeteksi. Anda dapat:"
   },
   "allowMmiToConnectToCustodian": {
     "message": "Ini akan memungkinkan MMI terhubung ke $1 untuk mengimpor akun Anda."
@@ -506,6 +521,9 @@
     "message": "Disetujui pada $1 untuk $2",
     "description": "$1 is the approval date for a permission. $2 is the AvatarGroup component displaying account images."
   },
+  "approvingTo": {
+    "message": "Menyetujui"
+  },
   "areYouSure": {
     "message": "Anda yakin?"
   },
@@ -597,6 +615,10 @@
   "basicConfigurationBannerTitle": {
     "message": "Fungsionalitas dasar tidak aktif"
   },
+  "basicConfigurationDescription": {
+    "message": "MetaMask menawarkan fitur dasar seperti detail token dan pengaturan gas melalui layanan internet. Alamat IP dibagikan saat menggunakan layanan internet, dalam hal ini kepada MetaMask. Ini sama seperti saat Anda mengunjungi situs web mana pun. MetaMask menggunakan data ini untuk sementara dan tidak akan pernah menjual data Anda. Anda dapat menggunakan VPN atau menonaktifkan layanan ini, akan tetapi hal ini dapat memengaruhi pengalaman dalam menggunakan MetaMask. Untuk selengkapnya, baca $1 kami.",
+    "description": "$1 is to be replaced by the message for privacyMsg, and will link to https://consensys.io/privacy-policy"
+  },
   "basicConfigurationLabel": {
     "message": "Fungsionalitas dasar"
   },
@@ -640,6 +662,10 @@
   "betaWalletCreationSuccessReminder2": {
     "message": "MetaMask Beta tidak akan pernah menanyakan Frasa Pemulihan Rahasia Anda."
   },
+  "billionAbbreviation": {
+    "message": "M",
+    "description": "Shortened form of 'billion'"
+  },
   "blockExplorerAccountAction": {
     "message": "Akun",
     "description": "This is used with viewOnEtherscan and viewInExplorer e.g View Account in Explorer"
@@ -665,6 +691,9 @@
   "blockaid": {
     "message": "Blockaid"
   },
+  "blockaidAlertInfo": {
+    "message": "Sebaiknya jangan lanjutkan permintaan ini."
+  },
   "blockaidDescriptionApproveFarming": {
     "message": "Jika Anda menyetujui permintaan ini, pihak ketiga yang terdeteksi melakukan penipuan dapat mengambil semua aset Anda."
   },
@@ -685,6 +714,9 @@
   },
   "blockaidDescriptionTransferFarming": {
     "message": "Jika Anda menyetujui permintaan ini, pihak ketiga yang terdeteksi melakukan penipuan akan mengambil semua aset Anda."
+  },
+  "blockaidDescriptionWarning": {
+    "message": "Ini mungkin merupakan permintaan tipuan. Lanjutkan hanya jika Anda memercayai setiap alamat yang terlibat."
   },
   "blockaidMessage": {
     "message": "Menjaga privasi - tidak ada data yang dibagikan kepada pihak ketiga. Tersedia di Arbitrum, Avalanche, BNB chain, Mainnet Ethereum, Linea, Optimism, Polygon, Base, dan Sepolia."
@@ -785,6 +817,9 @@
   "chromeRequiredForHardwareWallets": {
     "message": "Anda perlu menggunakan MetaMask di Google Chrome untuk terhubung ke Dompet Perangkat Keras Anda."
   },
+  "circulatingSupply": {
+    "message": "Suplai yang beredar"
+  },
   "clear": {
     "message": "Hapus"
   },
@@ -842,6 +877,9 @@
     "message": "Konfirmasikan"
   },
   "confirmAlertModalAcknowledge": {
+    "message": "Saya telah mengetahui peringatannya dan tetap ingin melanjutkan"
+  },
+  "confirmAlertModalAcknowledgeBlockaid": {
     "message": "Saya telah mengetahui peringatannya dan tetap ingin melanjutkan"
   },
   "confirmAlertModalDetails": {
@@ -1345,6 +1383,12 @@
   "developerOptions": {
     "message": "Opsi Pengembang"
   },
+  "developerOptionsNetworkMenuRedesignDescription": {
+    "message": "Mengalihkan desain baru menu Jaringan"
+  },
+  "developerOptionsNetworkMenuRedesignTitle": {
+    "message": "Desain Ulang Menu Jaringan"
+  },
   "developerOptionsResetStatesAnnouncementsDescription": {
     "message": "Reset boolean isShown bernilai salah untuk semua pengumuman. Pengumuman adalah notifikasi yang ditampilkan di modal popup Yang Baru."
   },
@@ -1413,6 +1457,9 @@
   },
   "displayNftMediaDescription": {
     "message": "Alamat IP dapat diketahui oleh OpenSea atau pihak ketiga lainnya saat menampilkan media dan data NFT. Ini memungkinkan penyerang menghubungkan alamat IP dengan alamat Ethereum Anda. Deteksi otomatis NFT bergantung pada pengaturan ini, dan tidak akan tersedia saat dinonaktifkan."
+  },
+  "diveStraightIntoUsingYourTokens": {
+    "message": "Gunakan token secara langsung"
   },
   "doNotShare": {
     "message": "Jangan bagikan ini kepada siapa pun"
@@ -1542,6 +1589,9 @@
   "editSpeedUpEditGasFeeModalTitle": {
     "message": "Edit biaya gas percepatan"
   },
+  "effortlesslyNavigateYourDigitalAssets": {
+    "message": "Navigasikan aset digital Anda dengan mudah"
+  },
   "enable": {
     "message": "Aktifkan"
   },
@@ -1557,6 +1607,9 @@
   "enableToken": {
     "message": "aktifkan $1",
     "description": "$1 is a token symbol, e.g. ETH"
+  },
+  "enableTokenAutoDetection": {
+    "message": "Aktifkan autodeteksi token"
   },
   "enabled": {
     "message": "Diaktifkan"
@@ -2046,6 +2099,9 @@
   "imToken": {
     "message": "imToken"
   },
+  "immediateAccessToYourTokens": {
+    "message": "Akses langsung ke token Anda"
+  },
   "import": {
     "message": "Impor",
     "description": "Button to import an account from a selected file"
@@ -2510,6 +2566,12 @@
   "manageInSettings": {
     "message": "Kelola di pengaturan"
   },
+  "marketCap": {
+    "message": "Kap pasar"
+  },
+  "marketDetails": {
+    "message": "Detail pasar"
+  },
   "max": {
     "message": "Maks"
   },
@@ -2574,6 +2636,10 @@
   },
   "metrics": {
     "message": "Metrik"
+  },
+  "millionAbbreviation": {
+    "message": "Jt",
+    "description": "Shortened form of 'million'"
   },
   "mismatchAccount": {
     "message": "Akun yang Anda pilih ($1) berbeda dengan akun yang mencoba ditandatangani ($2)"
@@ -2934,6 +3000,9 @@
   "noDomainResolution": {
     "message": "Tidak ada resolusi untuk domain yang tersedia."
   },
+  "noHardwareWalletOrSnapsSupport": {
+    "message": "Snap, dan sebagian besar dompet perangkat keras, tidak akan berfungsi dengan versi browser saat ini."
+  },
   "noNFTs": {
     "message": "Belum ada NFT"
   },
@@ -2978,6 +3047,9 @@
   },
   "notEnoughGas": {
     "message": "Gas tidak cukup"
+  },
+  "notRightNow": {
+    "message": "Tidak sekarang"
   },
   "note": {
     "message": "Catatan"
@@ -3337,6 +3409,22 @@
   "onboardingUsePhishingDetectionDescription": {
     "message": "Peringatan deteksi pengelabuan bergantung pada komunikasi dengan $1. jsDeliver akan mendapat akses ke alamat IP Anda. Lihat $2.",
     "description": "The $1 is the word 'jsDeliver', from key 'jsDeliver' and $2 is the words Privacy Policy from key 'privacyMsg', both separated here so that it can be wrapped as a link"
+  },
+  "oneDayAbbreviation": {
+    "message": "1H",
+    "description": "Shortened form of '1 day'"
+  },
+  "oneMonthAbbreviation": {
+    "message": "1B",
+    "description": "Shortened form of '1 month'"
+  },
+  "oneWeekAbbreviation": {
+    "message": "1M",
+    "description": "Shortened form of '1 week'"
+  },
+  "oneYearAbbreviation": {
+    "message": "1T",
+    "description": "Shortened form of '1 year'"
   },
   "onekey": {
     "message": "OneKey"
@@ -4208,6 +4296,9 @@
   "searchAccounts": {
     "message": "Cari akun"
   },
+  "searchNfts": {
+    "message": "Cari NFT"
+  },
   "searchTokens": {
     "message": "Cari token"
   },
@@ -4496,6 +4587,9 @@
   "signing": {
     "message": "Penandatanganan"
   },
+  "signingInWith": {
+    "message": "Masuk dengan"
+  },
   "simulationDetailsFailed": {
     "message": "Terjadi kesalahan saat memuat estimasi Anda."
   },
@@ -4532,6 +4626,9 @@
   },
   "simulationsSettingSubHeader": {
     "message": "Estimasikan perubahan saldo"
+  },
+  "siweSignatureSimulationDetailInfo": {
+    "message": "Jenis tanda tangan ini tidak dapat memindahkan aset Anda dan digunakan untuk masuk."
   },
   "skip": {
     "message": "Lewati"
@@ -4635,6 +4732,14 @@
   },
   "snapAccountsDescription": {
     "message": "Akun yang dikontrol oleh Snap pihak ketiga."
+  },
+  "snapConnectTo": {
+    "message": "Hubungkan ke $1",
+    "description": "$1 is the website URL or a Snap name. Used for Snaps pre-approved connections."
+  },
+  "snapConnectionPermissionDescription": {
+    "message": "Izinkan $1 terhubung secara otomatis ke $2 tanpa persetujuan Anda.",
+    "description": "Used for Snap pre-approved connections. $1 is the Snap name, $2 is a website URL."
   },
   "snapConnectionWarning": {
     "message": "$1 ingin menggunakan $2",
@@ -5540,6 +5645,10 @@
   "thisCollection": {
     "message": "koleksi ini"
   },
+  "threeMonthsAbbreviation": {
+    "message": "3B",
+    "description": "Shortened form of '3 months'"
+  },
   "time": {
     "message": "Waktu"
   },
@@ -5619,6 +5728,9 @@
   "tokenContractAddress": {
     "message": "Alamat kontrak token"
   },
+  "tokenDecimal": {
+    "message": "Desimal token"
+  },
   "tokenDecimalFetchFailed": {
     "message": "Desimal token diperlukan. Temukan di: $1"
   },
@@ -5667,6 +5779,9 @@
   },
   "total": {
     "message": "Total"
+  },
+  "totalVolume": {
+    "message": "Volume total"
   },
   "transaction": {
     "message": "transaksi"
@@ -5772,6 +5887,10 @@
   },
   "transferFrom": {
     "message": "Transfer dari"
+  },
+  "trillionAbbreviation": {
+    "message": "T",
+    "description": "Shortened form of 'trillion'"
   },
   "troubleConnectingToLedgerU2FOnFirefox": {
     "message": "Kami mengalami masalah saat menghubungkan Ledger Anda. $1",
@@ -6145,6 +6264,12 @@
   },
   "yourAccounts": {
     "message": "Akun Anda"
+  },
+  "yourActivity": {
+    "message": "Aktivitas Anda"
+  },
+  "yourBalance": {
+    "message": "Saldo Anda"
   },
   "yourFundsMayBeAtRisk": {
     "message": "Dana Anda mungkin berisiko"

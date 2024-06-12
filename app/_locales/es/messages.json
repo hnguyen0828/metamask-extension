@@ -530,6 +530,9 @@
   "attributions": {
     "message": "Atribuciones"
   },
+  "auroraRpcDeprecationMessage": {
+    "message": "La URL de RPC de Infura ya no es compatible con Aurora."
+  },
   "authorizedPermissions": {
     "message": "Ha autorizado los siguientes permisos"
   },

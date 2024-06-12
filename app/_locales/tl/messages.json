@@ -530,6 +530,9 @@
   "attributions": {
     "message": "Mga Attribution"
   },
+  "auroraRpcDeprecationMessage": {
+    "message": "Ang Infura RPC URL ay hindi na sinusuportahan ang Aurora."
+  },
   "authorizedPermissions": {
     "message": "Inawtorisahan mo ang mga sumusunod na pahintulot"
   },

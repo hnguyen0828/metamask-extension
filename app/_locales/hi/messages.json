@@ -530,6 +530,9 @@
   "attributions": {
     "message": "एट्रीब्यूशन्स"
   },
+  "auroraRpcDeprecationMessage": {
+    "message": "Infura RPC URL अब Aurora को सपोर्ट नहीं कर रहा है।"
+  },
   "authorizedPermissions": {
     "message": "आपने निम्नलिखित अनुमतियों को अधिकृत किया है"
   },

@@ -530,6 +530,9 @@
   "attributions": {
     "message": "속성"
   },
+  "auroraRpcDeprecationMessage": {
+    "message": "Infura RPC URL은 더 이상 Aurora를 지원하지 않습니다."
+  },
   "authorizedPermissions": {
     "message": "다음 권한을 승인했습니다."
   },

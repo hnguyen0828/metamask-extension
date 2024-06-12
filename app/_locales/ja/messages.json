@@ -530,6 +530,9 @@
   "attributions": {
     "message": "属性"
   },
+  "auroraRpcDeprecationMessage": {
+    "message": "Infura RPC URLでAuroraがサポートされなくなりました。"
+  },
   "authorizedPermissions": {
     "message": "以下の権限を承認しました"
   },
@@ -2549,7 +2552,7 @@
     "message": "MetaMask Institutionalバージョン"
   },
   "metamaskNotificationsAreOff": {
-    "message": "ウォレット通知は現在アクティブではありません"
+    "message": "ウォレットの通知は現在無効になっています"
   },
   "metamaskPortfolio": {
     "message": "MetaMask Portfolio。"
@@ -3025,13 +3028,13 @@
     "message": "出金準備ができました"
   },
   "notificationItemLidoStakeReadyToBeWithdrawnMessage": {
-    "message": "これでステーキングされていない $1 を引き出すことができます"
+    "message": "これでステーキングが解除された$1を引き出すことができます"
   },
   "notificationItemLidoWithdrawalRequestedMessage": {
-    "message": "$1 のステーキングを解除するリクエストが送信されました"
+    "message": "$1のステーキングを解除するリクエストが送信されました"
   },
   "notificationItemNFTReceivedFrom": {
-    "message": "NFTを次の元から受け取りました:"
+    "message": "NFTを次の相手から受け取りました:"
   },
   "notificationItemNFTSentTo": {
     "message": "NFTを次の相手に送りました:"
@@ -3046,7 +3049,7 @@
     "message": "受け取りました"
   },
   "notificationItemReceivedFrom": {
-    "message": "次の元から受け取りました:"
+    "message": "次の相手から受け取りました:"
   },
   "notificationItemSent": {
     "message": "送りました"
@@ -3082,7 +3085,7 @@
     "message": "ステーキングの解除が完了しました"
   },
   "notificationItemUnStaked": {
-    "message": "ステーキングが寛恕されました"
+    "message": "ステーキングが解除されました"
   },
   "notificationItemUnStakingRequested": {
     "message": "ステーキングの解除がリクエストされました"
@@ -4366,7 +4369,7 @@
     "description": "Symbol of the specified token"
   },
   "sendSwapSubmissionWarning": {
-    "message": "このボタンをクリックすると、直ちにスワップトランザクションが開始します。続ける前に、以下のトランザクションの詳細を確認してください。"
+    "message": "このボタンをクリックすると、直ちにスワップトランザクションが開始します。続ける前に、トランザクションの詳細を確認してください。"
   },
   "sendTokenAsToken": {
     "message": "$1を$2として送金",
@@ -5821,7 +5824,7 @@
     "message": "通知を使えば、ウォレットで何が起きているか常に把握できます。"
   },
   "turnOnMetamaskNotificationsMessagePrivacyBold": {
-    "message": "「設定」>「通知」。"
+    "message": "「設定」>「通知」"
   },
   "turnOnMetamaskNotificationsMessagePrivacyLink": {
     "message": "この機能を使用する際に当社がどのようにユーザーのプライバシーを保護するのか、ご覧ください。"
